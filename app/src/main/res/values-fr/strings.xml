@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--Adrian Portal Calcines n01489363 0CA
     Alfred Dowuona <student id> 0CA
     Ali Mohebi <student id> <section code>
     Hassan Noorani <student id> 0CB -->
 <resources>
     <string name="app_name">CaveExaminationBot</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Maison</string>
+    <string name="title_dashboard">Tableau de bord</string>
+    <string name="title_notifications">Avis</string>
 </resources>

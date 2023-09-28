@@ -1,4 +1,8 @@
 package ca.teambot.it.cave.examination.bot;
+//Adrian Portal Calcines n01489363 0CA
+//Alfred Dowuona <student id> 0CA
+//Ali Mohebi <student id> <section code>
+//Hassan Noorani <student id> 0CB
 
 import android.os.Bundle;
 
