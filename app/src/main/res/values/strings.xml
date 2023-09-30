@@ -8,4 +8,6 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="botName">Cave Examination Bot</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
 </resources>

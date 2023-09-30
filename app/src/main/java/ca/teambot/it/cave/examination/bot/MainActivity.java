@@ -16,7 +16,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import ca.teambot.it.cave.examination.bot.databinding.ActivityMainBinding;
-import ca.teambot.it.cave.examination.bot.ui.SplashActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,17 +45,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                Intent i = new Intent(MainActivity.this, SplashActivity.class);
-
-                startActivity(i);
-
-                finish();
-            }
-        }, 2000);
 
     }
 
