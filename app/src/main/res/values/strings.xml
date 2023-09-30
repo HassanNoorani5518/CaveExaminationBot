@@ -1,10 +1,11 @@
 <!--Adrian Portal Calcines n01489363 0CA
-    Alfred Dowuona <student id> 0CA
+    Alfred Dowuona <N01490404> 0CA
     Ali Mohebi <N01477361> <0CB>
-    Hassan Noorani <student id> 0CB -->
+    Hassan Noorani <n01485518> 0CB -->
 <resources>
     <string name="app_name">CaveExaminationBot</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="botName">Cave Examination Bot</string>
 </resources>
