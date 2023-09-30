@@ -9,3 +9,6 @@
 
 Project link: https://github.com/HassanNoorani5518/CaveExaminationBot
 
+# Project description:
+
+The cave exploration robot project's goals are to combine both hardware and software to create a robot that can safely navigate caves, mapping out interiors and providing environmental data for further analysing and determining if it is safe for human exploration. 
