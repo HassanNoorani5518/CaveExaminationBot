@@ -1,5 +1,5 @@
 # CaveExaminationBot
-![Alt Text](drawable/applogo.png)
+![Alt Text](app/src/main/res/drawable/applogo.png)
 # Software project by : 
 
  Adrian Portal Calcines - n01489363
