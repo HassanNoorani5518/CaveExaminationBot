@@ -9,4 +9,5 @@
     <string name="title_dashboard">Tableau de bord</string>
     <string name="title_notifications">Avis</string>
     <string name="botName">Cave Examination Bot</string>
+    <string name="caveexplorationbot">CaveExplorationBot</string>
 </resources>

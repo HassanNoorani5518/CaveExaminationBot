@@ -2,50 +2,54 @@ package ca.teambot.it.cave.examination.bot;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.WindowManager;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import ca.teambot.it.cave.examination.bot.databinding.ActivityMainBinding;
+import ca.teambot.it.cave.examination.bot.ui.dashboard.DashboardFragment;
+import ca.teambot.it.cave.examination.bot.ui.home.HomeFragment;
+import ca.teambot.it.cave.examination.bot.ui.notifications.NotificationsFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding binding;
+    BottomNavigationView bottomNavigationView;
     private boolean backArrowPressed = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_main);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+    }
+    HomeFragment homeFragment = new HomeFragment();
+    DashboardFragment dashboardFragment = new DashboardFragment();
+    NotificationsFragment notificationsFragment = new NotificationsFragment();
 
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
-
-
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.navigation_home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, homeFragment).commit();
+                return true;
+            case R.id.navigation_dashboard:
+                getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, dashboardFragment).commit();
+            case R.id.navigation_notifications:
+                getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, notificationsFragment).commit();
+                return true;
+        }
+        return false;
     }
 
     @Override
