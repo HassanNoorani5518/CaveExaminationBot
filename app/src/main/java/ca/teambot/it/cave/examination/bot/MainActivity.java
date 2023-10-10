@@ -54,12 +54,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void onBackPressed() {
-        if (backArrowPressed) {
-            // Handle the back arrow press (show exit confirmation dialog)
-            showExitAlertDialog();
-        } else {
-            super.onBackPressed();
-        }
+        // Display a confirmation dialog
+        new AlertDialog.Builder(this)
+                .setTitle("Exit App")
+                .setMessage("Are you sure you want to exit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // If the user confirms, finish the activity
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // If the user cancels, dismiss the dialog
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     @Override
