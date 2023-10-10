@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import ca.teambot.it.cave.examination.bot.databinding.ActivityMainBinding;
+import ca.teambot.it.cave.examination.bot.ui.Location.LocationFragment;
 import ca.teambot.it.cave.examination.bot.ui.dashboard.DashboardFragment;
 import ca.teambot.it.cave.examination.bot.ui.home.HomeFragment;
 import ca.teambot.it.cave.examination.bot.ui.notifications.NotificationsFragment;
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     HomeFragment homeFragment = new HomeFragment();
     DashboardFragment dashboardFragment = new DashboardFragment();
     NotificationsFragment notificationsFragment = new NotificationsFragment();
+    LocationFragment locationFragment = new LocationFragment();
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
@@ -47,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, dashboardFragment).commit();
             case R.id.navigation_notifications:
                 getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, notificationsFragment).commit();
+
+            case R.id.navigation_location:
+                getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, locationFragment);
                 return true;
         }
         return false;
@@ -112,4 +119,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    public void exitApp() {
+
+        finish();
+        System.exit(0);
+
+    }
+
 }
