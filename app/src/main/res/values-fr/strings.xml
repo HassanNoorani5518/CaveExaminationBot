@@ -10,4 +10,5 @@
     <string name="title_notifications">Avis</string>
     <string name="botName">Cave Examination Bot</string>
     <string name="caveexplorationbot">CaveExplorationBot</string>
+    <string name="welcome_message">Bienvenue dans notre application !</string>
 </resources>
