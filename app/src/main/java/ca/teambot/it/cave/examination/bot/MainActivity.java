@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
         });
 
+
         builder.setNegativeButton("Stay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

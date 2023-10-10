@@ -10,4 +10,8 @@
     <string name="title_notifications">Avis</string>
     <string name="botName">Cave Examination Bot</string>
     <string name="caveexplorationbot">CaveExplorationBot</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="hello_blank_fragment">Bonjour Fragment vierge</string>
+    <string name="todo">TODO</string>
 </resources>

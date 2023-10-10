@@ -19,6 +19,7 @@ import ca.teambot.it.cave.examination.bot.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment
 {
+
     public HomeFragment()
     {
 
