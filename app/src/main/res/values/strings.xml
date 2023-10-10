@@ -13,7 +13,10 @@
     <string name="caveexplorationbot">CaveExplorationBot</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="welcome_message">Welcome to our app!</string>
+    <string name="welcome_message" translatable="false">Welcome to our app!</string>
     <string name="todo">TODO</string>
     <string name="location">Location\n</string>
+    <string name="TBD" translatable="false">TBD</string>
+
+    />
 </resources>
