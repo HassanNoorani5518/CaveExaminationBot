@@ -2,13 +2,20 @@ package ca.teambot.it.cave.examination.bot;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import ca.teambot.it.cave.examination.bot.databinding.ActivityMainBinding;
 import ca.teambot.it.cave.examination.bot.ui.Location.LocationFragment;
@@ -21,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private ActivityMainBinding binding;
     BottomNavigationView bottomNavigationView;
     private boolean backArrowPressed = false;
+    private static final int INTERNET_PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -79,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         dialog.dismiss();
                     }
                 })
+                .setIcon(getDrawable(R.drawable.baseline_privacy_tip_24))
                 .show();
     }
 
@@ -127,4 +136,59 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_implementation, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        if (id == R.id.item1)
+        {
+            //To be implemented
+            return true;
+        } else if (id == R.id.item2)
+        {
+            //To be implemented
+            return true;
+        }
+        else if (id == R.id.item3)
+        {
+            //To be implemented
+            return true;
+        }
+        else if (id == R.id.item4)
+        {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.INTERNET}, INTERNET_PERMISSION_REQUEST_CODE);
+            }
+            else
+            {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.ca")));
+            }
+            return true;
+        }
+        else
+        {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == INTERNET_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_main), "Permission granted.", Snackbar.LENGTH_SHORT);
+                snackbar.show();
+            } else {
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_main), "Permission was not granted.", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        }
+    }
 }
