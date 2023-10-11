@@ -8,15 +8,17 @@
     <string name="title_home">Maison</string>
     <string name="title_dashboard">Tableau de bord</string>
     <string name="title_notifications">Avis</string>
-    <string name="botName">Cave Examination Bot</string>
-    <string name="caveexplorationbot">CaveExplorationBot</string>
-    <string name="title_activity_splash">SplashActivity</string>
-    <string name="title_activity_splash_screen">SplashScreen</string>
-    <string name="hello_blank_fragment">Bonjour Fragment vierge</string>
-    <string name="todo">TODO</string>
-    <string name="location">Location\n</string>
-    <string name="language_region">Language/Region</string>
-    <string name="feedback">Feedback</string>
-    <string name="about">About</string>
-    <string name="help">Help</string>
+    <string name="botName">Robot d\'examen des grottes</string>
+    <string name="title_activity_splash">Activité Splash</string>
+    <string name="title_activity_splash_screen">Écran de démarrage</string>
+    <string name="caveexplorationbot">Grotte Exploration Bot</string>
+    <string name="hello_blank_fragment">Bonjour fragment vierge</string>
+    <string name="welcome_message" translatable="false">Bienvenue sur notre application !</string>
+    <string name="todo">FAIRE</string>
+    <string name="location">Emplacement\n</string>
+    <string name="TBD" translatable="false">À déterminer</string>
+    <string name="language_region">Langue/Région</string>
+    <string name="feedback">Retour</string>
+    <string name="about">À propos</string>
+    <string name="help">Aide</string> />
 </resources>
