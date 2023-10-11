@@ -17,6 +17,10 @@
     <string name="todo">TODO</string>
     <string name="location">Location\n</string>
     <string name="TBD" translatable="false">TBD</string>
+    <string name="language_region">Language/Region</string>
+    <string name="feedback">Feedback</string>
+    <string name="about">About</string>
+    <string name="help">Help</string>
 
     />
 </resources>
