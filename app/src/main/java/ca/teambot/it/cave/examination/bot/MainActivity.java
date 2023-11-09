@@ -13,11 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import ca.teambot.it.cave.examination.bot.databinding.ActivityMainBinding;
+import ca.teambot.it.cave.examination.bot.ui.FeedbackFragment;
 import ca.teambot.it.cave.examination.bot.ui.Location.LocationFragment;
 import ca.teambot.it.cave.examination.bot.ui.dashboard.DashboardFragment;
 import ca.teambot.it.cave.examination.bot.ui.home.HomeFragment;
@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     DashboardFragment dashboardFragment = new DashboardFragment();
     NotificationsFragment notificationsFragment = new NotificationsFragment();
     LocationFragment locationFragment = new LocationFragment();
+
+    FeedbackFragment feedbackFragment = new FeedbackFragment();
 
 
 
@@ -153,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             return true;
         } else if (id == R.id.item2)
         {
-            //To be implemented
+            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, feedbackFragment).commit();
             return true;
         }
         else if (id == R.id.item3)

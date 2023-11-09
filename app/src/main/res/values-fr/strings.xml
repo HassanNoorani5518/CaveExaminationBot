@@ -20,5 +20,12 @@
     <string name="language_region">Langue/Région</string>
     <string name="feedback">Retour</string>
     <string name="about">À propos</string>
-    <string name="help">Aide</string> />
+    <string name="help">Aide</string>
+    <string name="name">Name</string>
+    <string name="comment">Comment</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="feedbackTitle">FeedBack</string>
+    <string name="submit_feedback">Submit Feedback</string>
+    />
 </resources>
