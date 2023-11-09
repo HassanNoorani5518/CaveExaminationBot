@@ -23,6 +23,13 @@ import ca.teambot.it.cave.examination.bot.ui.dashboard.DashboardFragment;
 import ca.teambot.it.cave.examination.bot.ui.home.HomeFragment;
 import ca.teambot.it.cave.examination.bot.ui.notifications.NotificationsFragment;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding binding;
@@ -40,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
 
-        //DatabaseConnect.initializeDynamoDB(this);
+        FirebaseApp.initializeApp(this);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
     HomeFragment homeFragment = new HomeFragment();
     DashboardFragment dashboardFragment = new DashboardFragment();

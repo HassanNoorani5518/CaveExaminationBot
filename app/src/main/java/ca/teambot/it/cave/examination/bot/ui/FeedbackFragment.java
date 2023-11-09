@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import com.amazonaws.mobileconnectors.dynamodbv2.document.datatype.Document;
+import com.google.android.material.snackbar.Snackbar;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,17 +91,18 @@ public class FeedbackFragment extends Fragment {
 
         if (status)
         {
-            Document feedbackDocument = new Document();
-            feedbackDocument.put("firstName", pfirstName);
-            feedbackDocument.put("phone", pphone);
-            feedbackDocument.put("email", pemail);
-            feedbackDocument.put("comment", pcomment);
-            feedbackDocument.put("phoneModel", phoneModel);
-            feedbackDocument.put("ratingBar", pratingBar);
+            FBDatabase fbDatabase = new FBDatabase();
 
-            // Call a method in DatabaseConnect to add the document to DynamoDB
-            DatabaseConnect databaseConnect = new DatabaseConnect();
-            databaseConnect.addItemToTable(feedbackDocument);
+            String uniqueFeedbackId = fbDatabase.generateUniqueKey("Feedback");
+
+            fbDatabase.addItem("Feedback", uniqueFeedbackId, "firstname", pfirstName);
+            fbDatabase.addItem("Feedback", uniqueFeedbackId, "phone", pphone);
+            fbDatabase.addItem("Feedback", uniqueFeedbackId, "email", pemail);
+            fbDatabase.addItem("Feedback", uniqueFeedbackId, "comment", pcomment);
+            fbDatabase.addItem("Feedback", uniqueFeedbackId, "phonemodel", phoneModel);
+            fbDatabase.addItem("Feedback", uniqueFeedbackId, "ratingbar", String.valueOf(pratingBar));
+
+            Snackbar.make(phone, "Feedback Submitted, Thank you!", Snackbar.LENGTH_SHORT).show();
         }
     }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "79905121764",
+    "project_id": "cave-examination-bot-db",
+    "storage_bucket": "cave-examination-bot-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79905121764:android:cec4ac858b91a273e2d3f1",
+        "android_client_info": {
+          "package_name": "ca.teambot.it.cave.examination.bot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV7XQSQKPQGuVqMbfqrXs4v8xAVAAm47U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
