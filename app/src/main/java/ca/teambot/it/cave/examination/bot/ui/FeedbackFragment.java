@@ -1,10 +1,9 @@
 package ca.teambot.it.cave.examination.bot.ui;
 
-import android.content.ClipData;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import com.amazonaws.mobileconnectors.dynamodbv2.document.datatype.Document;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.w3c.dom.Document;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import ca.teambot.it.cave.examination.bot.R;
 
@@ -41,12 +36,7 @@ public class FeedbackFragment extends Fragment {
         email = view.findViewById(R.id.editTextTextEmailAddress);
         comment = view.findViewById(R.id.editTextTextMultiLine);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                uploadFeedback();
-            }
-        });
+        button.setOnClickListener(view1 -> uploadFeedback());
         return view;
     }
 
@@ -94,11 +84,15 @@ public class FeedbackFragment extends Fragment {
 
         if (status)
         {
-            Map<String, Object> feedbackMap = new HashMap<>();
-            feedbackMap.put("firstName", pfirstName);
-            feedbackMap.put("phone", pphone);
-            feedbackMap.put("email", pemail);
-            feedbackMap.put("comment", pcomment);
+            Document feedbackDocument = new Document();
+            feedbackDocument.put("firstName", pfirstName);
+            feedbackDocument.put("phone", pphone);
+            feedbackDocument.put("email", pemail);
+            feedbackDocument.put("comment", pcomment);
+
+            // Call a method in DatabaseConnect to add the document to DynamoDB
+            DatabaseConnect databaseConnect = new DatabaseConnect();
+            databaseConnect.addItemToTable(feedbackDocument);
         }
     }
 }
