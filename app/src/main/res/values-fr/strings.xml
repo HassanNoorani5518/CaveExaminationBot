@@ -27,5 +27,12 @@
     <string name="phone">Phone</string>
     <string name="feedbackTitle">FeedBack</string>
     <string name="submit_feedback">Submit Feedback</string>
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="create_account">create_account</string>
+    <string name="forgot_password">forgot_password</string>
+    <string name="createaccount">Create Account</string>
+    <string name="forgotpassword">Forgot Password</string>
+    <string name="submit">Submit</string>
     />
 </resources>
