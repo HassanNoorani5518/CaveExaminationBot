@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
-        android:layout_marginTop="520dp"
+        android:layout_marginTop="448dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="295dp"
+        android:layout_marginTop="284dp"
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="textEmailAddress"
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="389dp"
+        android:layout_marginTop="356dp"
         android:ems="10"
         android:gravity="start|top"
         android:importantForAutofill="no"
@@ -86,9 +86,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="116dp"
-        android:layout_marginTop="624dp"
-        android:text="@string/submit_feedback"
+        android:layout_marginTop="544dp"
         android:backgroundTint="@color/black"
+        android:text="@string/submit_feedback"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

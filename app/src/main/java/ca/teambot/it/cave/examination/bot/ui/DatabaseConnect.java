@@ -13,6 +13,8 @@ public class DatabaseConnect {
 
     private static Table dbTable;
 
+
+
     public static void initializeDynamoDB(Context context) {
         CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(context, "us-east-2:c6963470-ac6c-4ffe-b98b-e3d5ca7833b2", Regions.US_EAST_2);
         AmazonDynamoDBClient dbClient = new AmazonDynamoDBClient(credentialsProvider);

@@ -1,5 +1,6 @@
 package ca.teambot.it.cave.examination.bot.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 
 
 import ca.teambot.it.cave.examination.bot.R;
@@ -18,6 +20,7 @@ public class FeedbackFragment extends Fragment {
 
     EditText firstName, phone, email, comment;
     Button button;
+    RatingBar ratingBar;
 
     public FeedbackFragment()
     {
@@ -35,6 +38,7 @@ public class FeedbackFragment extends Fragment {
         phone = view.findViewById(R.id.editTextPhone);
         email = view.findViewById(R.id.editTextTextEmailAddress);
         comment = view.findViewById(R.id.editTextTextMultiLine);
+        ratingBar = view.findViewById(R.id.ratingBar);
 
         button.setOnClickListener(view1 -> uploadFeedback());
         return view;
@@ -46,6 +50,8 @@ public class FeedbackFragment extends Fragment {
         String pphone = phone.getText().toString();
         String pemail = email.getText().toString();
         String pcomment = comment.getText().toString();
+        String phoneModel = Build.MODEL;
+        int pratingBar = ratingBar.getNumStars();
 
         boolean status = true;
 
@@ -65,9 +71,9 @@ public class FeedbackFragment extends Fragment {
             phone.setError("This field cannot be empty!");
             status = false;
         }
-        else if ((pphone.length() < 10) || (pphone.matches("\\d+")))
+        else if ((pphone.length() < 10) || !pphone.matches("^[0-9]{10}$"))
         {
-            phone.setError("This field must have at least 10 numbers and no alphabetic characters");
+            phone.setError("This field must have exactly 10 numbers and no alphabetic characters");
             status = false;
         }
 
@@ -89,6 +95,8 @@ public class FeedbackFragment extends Fragment {
             feedbackDocument.put("phone", pphone);
             feedbackDocument.put("email", pemail);
             feedbackDocument.put("comment", pcomment);
+            feedbackDocument.put("phoneModel", phoneModel);
+            feedbackDocument.put("ratingBar", pratingBar);
 
             // Call a method in DatabaseConnect to add the document to DynamoDB
             DatabaseConnect databaseConnect = new DatabaseConnect();
