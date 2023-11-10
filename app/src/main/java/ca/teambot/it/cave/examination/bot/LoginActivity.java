@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,9 +21,6 @@ public class LoginActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        FBDatabase fbDatabase = new FBDatabase();
-        fbDatabase.checkForLogin(LoginActivity.this);
 
         email = findViewById(R.id.editTextTextEmailAddress);
         password = findViewById(R.id.editTextTextPassword);
@@ -70,6 +66,8 @@ public class LoginActivity extends AppCompatActivity
         {
             FBDatabase fbDatabase = new FBDatabase();
             fbDatabase.SignInUser(pemail, ppassword, LoginActivity.this, prememberMe);
+
+            finish();
         }
     }
 }

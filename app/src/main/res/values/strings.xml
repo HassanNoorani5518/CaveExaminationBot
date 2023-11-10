@@ -16,7 +16,6 @@
     <string name="todo">TODO</string>
     <string name="location">Location\n</string>
     <string name="TBD" translatable="false">TBD</string>
-    <string name="language_region">Language/Region</string>
     <string name="feedback">Feedback</string>
     <string name="about">About</string>
     <string name="help">Help</string>
@@ -37,5 +36,10 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="back_to_login">Back to login</string>
     <string name="current_user">Current user:</string>
+    <string name="about_us">About Us</string>
+    <string name="logged_in_as">Logged in as:</string>
+    <string name="team_name_teambot_nproject_name_caveexaminationbot">Team Name: TeamBot\nProject Name: CaveExaminationBot</string>
+    <string name="about_the_project">About the project:</string>
+    <string name="space">"  "</string>
     />
 </resources>

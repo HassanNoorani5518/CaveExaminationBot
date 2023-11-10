@@ -1,51 +1,34 @@
 package ca.teambot.it.cave.examination.bot;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
-
-import ca.teambot.it.cave.examination.bot.databinding.ActivityMainBinding;
+import ca.teambot.it.cave.examination.bot.ui.AboutFragment;
+import ca.teambot.it.cave.examination.bot.ui.FBDatabase;
 import ca.teambot.it.cave.examination.bot.ui.FeedbackFragment;
 import ca.teambot.it.cave.examination.bot.ui.Location.LocationFragment;
 import ca.teambot.it.cave.examination.bot.ui.dashboard.DashboardFragment;
 import ca.teambot.it.cave.examination.bot.ui.home.HomeFragment;
 import ca.teambot.it.cave.examination.bot.ui.notifications.NotificationsFragment;
-
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
+
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private ActivityMainBinding binding;
     BottomNavigationView bottomNavigationView;
     private boolean backArrowPressed = false;
     private static final int INTERNET_PERMISSION_REQUEST_CODE = 1;
-    FirebaseAuth auth;
-    FirebaseUser user;
-    TextView textView;
 
-    private boolean checkLoginState()
-    {
-        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean("isLoggedIn", false);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,13 +39,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
-
-        if (!checkLoginState())
-        {
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent);
-            finish();
-        }
     }
     HomeFragment homeFragment = new HomeFragment();
     DashboardFragment dashboardFragment = new DashboardFragment();
@@ -70,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     LocationFragment locationFragment = new LocationFragment();
 
     FeedbackFragment feedbackFragment = new FeedbackFragment();
+    AboutFragment aboutFragment = new AboutFragment();
 
 
 
@@ -100,19 +77,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         new AlertDialog.Builder(this)
                 .setTitle("Exit App")
                 .setMessage("Are you sure you want to exit?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // If the user confirms, finish the activity
-                        finish();
-                    }
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    // If the user confirms, finish the activity
+                    finish();
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // If the user cancels, dismiss the dialog
-                        dialog.dismiss();
-                    }
+                .setNegativeButton("No", (dialog, which) -> {
+                    // If the user cancels, dismiss the dialog
+                    dialog.dismiss();
                 })
                 .setIcon(getDrawable(R.drawable.baseline_privacy_tip_24))
                 .show();
@@ -134,21 +105,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         builder.setMessage("Do you want to exit the app?");
 
         // Add buttons to the AlertDialog
-        builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Close the app
-                finish();
-            }
+        builder.setPositiveButton("Exit", (dialog, which) -> {
+            // Close the app
+            finish();
         });
 
 
-        builder.setNegativeButton("Stay", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // User chose to stay, reset the flag
-                backArrowPressed = false;
-            }
+        builder.setNegativeButton("Stay", (dialog, which) -> {
+            // User chose to stay, reset the flag
+            backArrowPressed = false;
         });
 
         // Show the AlertDialog
@@ -176,16 +141,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         int id = item.getItemId();
         if (id == R.id.item1)
         {
-            //To be implemented
+            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, aboutFragment).commit();
             return true;
-        } else if (id == R.id.item2)
+        }
+        else if (id == R.id.item2)
         {
             getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, feedbackFragment).commit();
             return true;
         }
         else if (id == R.id.item3)
         {
+            FBDatabase fbDatabase = new FBDatabase();
+            fbDatabase.saveLoginState(MainActivity.this, false);
             FirebaseAuth.getInstance().signOut();
+
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
@@ -209,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == INTERNET_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
