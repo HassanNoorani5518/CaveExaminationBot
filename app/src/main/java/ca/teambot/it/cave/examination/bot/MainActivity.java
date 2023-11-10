@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,11 +25,9 @@ import ca.teambot.it.cave.examination.bot.ui.home.HomeFragment;
 import ca.teambot.it.cave.examination.bot.ui.notifications.NotificationsFragment;
 
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -36,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     BottomNavigationView bottomNavigationView;
     private boolean backArrowPressed = false;
     private static final int INTERNET_PERMISSION_REQUEST_CODE = 1;
+    FirebaseAuth auth;
+    FirebaseUser user;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,8 +49,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
 
-        FirebaseApp.initializeApp(this);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
     }
     HomeFragment homeFragment = new HomeFragment();
     DashboardFragment dashboardFragment = new DashboardFragment();
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void onBackPressed() {
         // Display a confirmation dialog
+        super.onBackPressed();
         new AlertDialog.Builder(this)
                 .setTitle("Exit App")
                 .setMessage("Are you sure you want to exit?")
@@ -170,7 +172,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         else if (id == R.id.item3)
         {
-            //To be implemented
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
             return true;
         }
         else if (id == R.id.item4)

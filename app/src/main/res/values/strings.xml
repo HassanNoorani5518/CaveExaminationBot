@@ -33,5 +33,9 @@
     <string name="createaccount">Create Account</string>
     <string name="forgotpassword">Forgot Password</string>
     <string name="submit">Submit</string>
+    <string name="register">Register</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="back_to_login">Back to login</string>
+    <string name="current_user">Current user:</string>
     />
 </resources>

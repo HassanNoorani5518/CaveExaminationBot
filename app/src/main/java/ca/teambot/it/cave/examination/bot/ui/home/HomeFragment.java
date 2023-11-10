@@ -6,6 +6,7 @@ package ca.teambot.it.cave.examination.bot.ui.home;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,19 +22,38 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import ca.teambot.it.cave.examination.bot.LoginActivity;
 import ca.teambot.it.cave.examination.bot.MainActivity;
 import ca.teambot.it.cave.examination.bot.R;
 import ca.teambot.it.cave.examination.bot.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment
 {
+    TextView textView;
+    FirebaseAuth auth;
+    FirebaseUser user;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        textView = view.findViewById(R.id.textView6);
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        if (user == null)
+        {
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            startActivity(intent);
+        }
+        else
+        {
+            textView.setText(user.getEmail());
+        }
 
-        ImageView fadingImage = rootView.findViewById(R.id.fade_cavebot);
+        ImageView fadingImage = view.findViewById(R.id.fade_cavebot);
 
         // Create an AlphaAnimation to fade the image in
         Animation fadeInAnimation = new AlphaAnimation(0.0f, 1.0f);
@@ -59,7 +79,7 @@ public class HomeFragment extends Fragment
         // Start the animation
         fadingImage.startAnimation(fadeInAnimation);
 
-        return rootView;
+        return view;
     }
 
 
