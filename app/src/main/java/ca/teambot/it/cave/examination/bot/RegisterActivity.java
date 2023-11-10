@@ -43,6 +43,9 @@ public class RegisterActivity extends AppCompatActivity
             progressBar.setVisibility(View.VISIBLE);
             String pemail = email.getText().toString();
             String ppassword = password.getText().toString();
+            String pname = name.getText().toString();
+            String pphone = phone.getText().toString();
+            String pconfirmPass = confirmPassword.getText().toString();
 
             boolean status = true;
 
@@ -62,14 +65,33 @@ public class RegisterActivity extends AppCompatActivity
                 password.setError("This field cannot be empty!");
                 status = false;
             }
+            if (pconfirmPass.isEmpty())
+            {
+                confirmPassword.setError("This field cannot be empty!");
+                status = false;
+            }
+            if (!pconfirmPass.equals(ppassword))
+            {
+                confirmPassword.setError("The passwords do not match!");
+                status = false;
+            }
+
+            if (pname.isEmpty())
+            {
+                name.setError("This field cannot be empty!");
+                status = false;
+            }
 
             if (status)
             {
                 FBDatabase fbDatabase = new FBDatabase();
+
+                String uniqueUserId = fbDatabase.generateUniqueKey("User");
+                fbDatabase.addItem("Feedback", uniqueUserId, "Name", pname);
+                fbDatabase.addItem("Feedback", uniqueUserId, "Phone", pphone);
+                fbDatabase.addItem("Feedback", uniqueUserId, "Email", pemail);
                 fbDatabase.createUser(pemail, ppassword, RegisterActivity.this);
                 progressBar.setVisibility(View.GONE);
-
-
             }
         });
     }

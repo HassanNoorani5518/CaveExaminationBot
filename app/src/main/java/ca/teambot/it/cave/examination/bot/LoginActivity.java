@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity
 
         String pemail = email.getText().toString();
         String ppassword = password.getText().toString();
+        boolean prememberMe = rememberMe.isChecked();
 
         if (pemail.isEmpty())
         {
@@ -68,11 +69,7 @@ public class LoginActivity extends AppCompatActivity
         if (status)
         {
             FBDatabase fbDatabase = new FBDatabase();
-            fbDatabase.SignInUser(pemail, ppassword, LoginActivity.this);
-
-            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(i);
-            finish();
+            fbDatabase.SignInUser(pemail, ppassword, LoginActivity.this, prememberMe);
         }
     }
 }

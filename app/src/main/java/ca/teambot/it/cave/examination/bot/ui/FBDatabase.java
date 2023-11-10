@@ -1,6 +1,7 @@
 package ca.teambot.it.cave.examination.bot.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 
@@ -78,7 +79,7 @@ public class FBDatabase
                 });
     }
 
-    public void SignInUser(String email, String password, Context context)
+    public void SignInUser(String email, String password, Context context, boolean rememberMe)
     {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -86,6 +87,10 @@ public class FBDatabase
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(context, "Login Successful!", Toast.LENGTH_SHORT).show();
+                            if (rememberMe)
+                            {
+                                saveLoginState(context, true);
+                            }
                             Intent intent = new Intent(context, MainActivity.class);
                             context.startActivity(intent);
                         }
@@ -95,5 +100,13 @@ public class FBDatabase
                         }
                     }
                 });
+    }
+
+    public void saveLoginState(Context context, boolean isLoggedIn)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isLoggedIn", isLoggedIn);
+        editor.apply();
     }
 }
