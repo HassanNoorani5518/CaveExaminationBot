@@ -60,6 +60,17 @@ public class RegisterActivity extends AppCompatActivity
                 status = false;
             }
 
+            if (pphone.isEmpty())
+            {
+                phone.setError("This field cannot be empty!");
+                status = false;
+            }
+            else if ((pphone.length() < 10) || !pphone.matches("^[0-9]{10}$"))
+            {
+                phone.setError("This field must have exactly 10 numbers and no alphabetic characters");
+                status = false;
+            }
+
             if (ppassword.isEmpty())
             {
                 password.setError("This field cannot be empty!");
