@@ -41,5 +41,8 @@
     <string name="team_name_teambot_nproject_name_caveexaminationbot">Team Name: TeamBot\nProject Name: CaveExaminationBot</string>
     <string name="about_the_project">About the project:</string>
     <string name="space">"  "</string>
+    <string name="default_web_client_id">79905121764-qebfg6o770jqolo2ovqrg6pgrv009ord.apps.googleusercontent.com</string>
+    <string name="error">"Error: "</string>
+    <string name="could_not_sign_you_in">Could not sign you in!</string>
     />
 </resources>

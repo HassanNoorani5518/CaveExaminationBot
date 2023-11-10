@@ -2,10 +2,10 @@ package ca.teambot.it.cave.examination.bot.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -15,15 +15,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import android.content.Context;
-
 import ca.teambot.it.cave.examination.bot.LoginActivity;
 import ca.teambot.it.cave.examination.bot.MainActivity;
-import ca.teambot.it.cave.examination.bot.RegisterActivity;
+
 
 public class FBDatabase
 {
     private DatabaseReference databaseReference;
     FirebaseAuth mAuth;
+
+    private static final int REQ_ONE_TAP = 2;  // Can be any integer unique to the Activity.
+
 
     public FBDatabase() {
         // Initialize the database reference
