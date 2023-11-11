@@ -155,8 +155,6 @@ public class LoginActivity extends AppCompatActivity
         {
             FBDatabase fbDatabase = new FBDatabase();
             fbDatabase.SignInUser(pemail, ppassword, LoginActivity.this, prememberMe);
-
-            finish();
         }
     }
 }
