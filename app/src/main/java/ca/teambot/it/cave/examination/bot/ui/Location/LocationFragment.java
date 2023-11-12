@@ -5,25 +5,25 @@ package ca.teambot.it.cave.examination.bot.ui.Location;
 //Hassan Noorani <student id> 0CB
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import ca.teambot.it.cave.examination.bot.MainActivity;
 import ca.teambot.it.cave.examination.bot.R;
-import ca.teambot.it.cave.examination.bot.databinding.FragmentHomeBinding;
 
-public class LocationFragment extends Fragment {
+
+public class LocationFragment extends Fragment implements OnMapReadyCallback {
+    private GoogleMap mMap;
 
     public LocationFragment()
     {
@@ -32,43 +32,38 @@ public class LocationFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_notifications, container, false);
-        return view;
-    }
+        View view = inflater.inflate(R.layout.fragment_location, container, false);
 
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment == null)
+        {
+            mapFragment = SupportMapFragment.newInstance();
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.map, mapFragment)
+                    .commit();
+        }
+
+        mapFragment.getMapAsync(this);
 
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
-                showExitConfirmationDialog();
+                ((MainActivity) requireActivity()).showExitAlertDialog();
                 return true;
             }
             return false;
         });
+
+        return view;
     }
 
-    private void showExitConfirmationDialog() {
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Exit App")
-                .setMessage("Are you sure you want to exit the app?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ((MainActivity) requireActivity()).exitApp();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+        LatLng ontario = new LatLng(51, 85);
+        mMap.addMarker(new MarkerOptions().position(ontario).title(getString(R.string.ontario)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(ontario));
     }
-
 }

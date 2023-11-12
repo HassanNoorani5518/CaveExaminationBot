@@ -1,12 +1,15 @@
 package ca.teambot.it.cave.examination.bot.ui;
+//Adrian Portal Calcines n01489363 0CA
+//Alfred Dowuona <student id> 0CA
+//Ali Mohebi <student id> <section code>
+//Hassan Noorani <student id> 0CB
 
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import com.amazonaws.mobileconnectors.dynamodbv2.document.datatype.Document;
 import com.google.android.material.snackbar.Snackbar;
-
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
-
+import ca.teambot.it.cave.examination.bot.MainActivity;
 import ca.teambot.it.cave.examination.bot.R;
 
 public class FeedbackFragment extends Fragment {
@@ -42,6 +45,17 @@ public class FeedbackFragment extends Fragment {
         ratingBar = view.findViewById(R.id.ratingBar);
 
         button.setOnClickListener(view1 -> uploadFeedback());
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                ((MainActivity) requireActivity()).showExitAlertDialog();
+                return true;
+            }
+            return false;
+        });
+
         return view;
     }
 
@@ -58,34 +72,34 @@ public class FeedbackFragment extends Fragment {
 
         if (pfirstName.isEmpty())
         {
-            firstName.setError("This field cannot be empty!");
+            firstName.setError(getString(R.string.this_field_cannot_be_empty));
             status = false;
         }
-        else if ((pfirstName.length() < 3) || (!pfirstName.matches("[a-zA-Z]+")))
+        else if ((pfirstName.length() < 3) || (!pfirstName.matches(getString(R.string.a_za_z))))
         {
-            firstName.setError("\"This field must have at least 3 chars and no numeric\"");
+            firstName.setError(getString(R.string.this_field_must_have_at_least_3_chars_and_no_numeric));
             status = false;
         }
 
         if (pphone.isEmpty())
         {
-            phone.setError("This field cannot be empty!");
+            phone.setError(getString(R.string.this_field_cannot_be_empty));
             status = false;
         }
-        else if ((pphone.length() < 10) || !pphone.matches("^[0-9]{10}$"))
+        else if ((pphone.length() < 10) || !pphone.matches(getString(R.string._0_9_10)))
         {
-            phone.setError("This field must have exactly 10 numbers and no alphabetic characters");
+            phone.setError(getString(R.string.this_field_must_have_exactly_10_numbers_and_no_alphabetic_characters));
             status = false;
         }
 
         if (pemail.isEmpty())
         {
-            email.setError("This field cannot be empty!");
+            email.setError(getString(R.string.this_field_cannot_be_empty));
             status = false;
         }
-        else if (!pemail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))
+        else if (!pemail.matches(getString(R.string.a_za_z0_9_a_za_z0_9_a_za_z_2)))
         {
-            email.setError("Email must follow correct format!");
+            email.setError(getString(R.string.email_must_follow_correct_format));
             status = false;
         }
 
@@ -93,16 +107,16 @@ public class FeedbackFragment extends Fragment {
         {
             FBDatabase fbDatabase = new FBDatabase();
 
-            String uniqueFeedbackId = fbDatabase.generateUniqueKey("Feedback");
+            String uniqueFeedbackId = fbDatabase.generateUniqueKey(getString(R.string.feedback));
 
-            fbDatabase.addItem("Feedback", uniqueFeedbackId, "firstname", pfirstName);
-            fbDatabase.addItem("Feedback", uniqueFeedbackId, "phone", pphone);
-            fbDatabase.addItem("Feedback", uniqueFeedbackId, "email", pemail);
-            fbDatabase.addItem("Feedback", uniqueFeedbackId, "comment", pcomment);
-            fbDatabase.addItem("Feedback", uniqueFeedbackId, "phonemodel", phoneModel);
-            fbDatabase.addItem("Feedback", uniqueFeedbackId, "ratingbar", String.valueOf(pratingBar));
+            fbDatabase.addItem(getString(R.string.feedback), uniqueFeedbackId, getString(R.string.firstname), pfirstName);
+            fbDatabase.addItem(getString(R.string.feedback), uniqueFeedbackId, getString(R.string.phone), pphone);
+            fbDatabase.addItem(getString(R.string.feedback), uniqueFeedbackId, getString(R.string.email), pemail);
+            fbDatabase.addItem(getString(R.string.feedback), uniqueFeedbackId, getString(R.string.comment), pcomment);
+            fbDatabase.addItem(getString(R.string.feedback), uniqueFeedbackId, getString(R.string.phonemodel), phoneModel);
+            fbDatabase.addItem(getString(R.string.feedback), uniqueFeedbackId, getString(R.string.ratingbar), String.valueOf(pratingBar));
 
-            Snackbar.make(phone, "Feedback Submitted, Thank you!", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(phone, getString(R.string.feedback_submitted_thank_you), Snackbar.LENGTH_SHORT).show();
         }
     }
 }

@@ -1,44 +1,30 @@
 package ca.teambot.it.cave.examination.bot.ui;
+//Adrian Portal Calcines n01489363 0CA
+//Alfred Dowuona <student id> 0CA
+//Ali Mohebi <student id> <section code>
+//Hassan Noorani <student id> 0CB
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.widget.Toast;
-import androidx.annotation.NonNull;
-import com.google.android.gms.auth.api.identity.BeginSignInRequest;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import android.content.Context;
 import ca.teambot.it.cave.examination.bot.LoginActivity;
 import ca.teambot.it.cave.examination.bot.MainActivity;
+import ca.teambot.it.cave.examination.bot.R;
 
 
 public class FBDatabase
 {
     private DatabaseReference databaseReference;
     FirebaseAuth mAuth;
-
-    private static final int REQ_ONE_TAP = 2;  // Can be any integer unique to the Activity.
-
-
     public FBDatabase() {
         // Initialize the database reference
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-    }
-
-    public void checkForLogin(Context context) {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent = new Intent(context, MainActivity.class);
-            context.startActivity(intent);
-        }
     }
 
     public void addItem(String parentNode, String uniqueKey, String field, String value) {
@@ -62,21 +48,16 @@ public class FBDatabase
     public void createUser(String email, String password, Context context)
     {
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>()
-                {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful())
                     {
-                        if (task.isSuccessful())
-                        {
-                            Toast.makeText(context, "Account Created!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(context, LoginActivity.class);
-                            context.startActivity(intent);
-                        }
-                        else
-                        {
-                            Toast.makeText(context, "Account Creation failed!", Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(context, context.getString(R.string.account_created), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        context.startActivity(intent);
+                    }
+                    else
+                    {
+                        Toast.makeText(context, R.string.account_creation_failed, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -84,31 +65,28 @@ public class FBDatabase
     public void SignInUser(String email, String password, Context context, boolean rememberMe)
     {
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(context, "Login Successful!", Toast.LENGTH_SHORT).show();
-                            if (rememberMe)
-                            {
-                                saveLoginState(context, true);
-                            }
-                            Intent intent = new Intent(context, MainActivity.class);
-                            context.startActivity(intent);
-                        }
-                        else
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(context, context.getString(R.string.login_successful), Toast.LENGTH_SHORT).show();
+                        if (rememberMe)
                         {
-                            Toast.makeText(context, "Login Failed.", Toast.LENGTH_SHORT).show();
+                            saveLoginState(context, true);
                         }
+                        Intent intent = new Intent(context, MainActivity.class);
+                        context.startActivity(intent);
+                    }
+                    else
+                    {
+                        Toast.makeText(context, context.getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     public void saveLoginState(Context context, boolean isLoggedIn)
     {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.loginprefs), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("isLoggedIn", isLoggedIn);
+        editor.putBoolean(context.getString(R.string.isloggedin), isLoggedIn);
         editor.apply();
     }
 }

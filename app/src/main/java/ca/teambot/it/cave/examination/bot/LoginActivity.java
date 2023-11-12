@@ -1,6 +1,10 @@
 package ca.teambot.it.cave.examination.bot;
+//Adrian Portal Calcines n01489363 0CA
+//Alfred Dowuona <student id> 0CA
+//Ali Mohebi <student id> <section code>
+//Hassan Noorani <student id> 0CB
 
-import androidx.annotation.NonNull;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -15,16 +19,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import ca.teambot.it.cave.examination.bot.ui.FBDatabase;
 
@@ -61,9 +64,7 @@ public class LoginActivity extends AppCompatActivity
 
 
 
-        googleButton.setOnClickListener(view -> {
-            googleSignIn();
-        });
+        googleButton.setOnClickListener(view -> googleSignIn());
 
         createAcc.setOnClickListener(view -> {
             Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -100,28 +101,26 @@ public class LoginActivity extends AppCompatActivity
     private void firebaseAuth(String idToken)
     {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful())
-                {
-                    FirebaseUser user = mAuth.getCurrentUser();
+        mAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
+            if (task.isSuccessful())
+            {
+                FirebaseUser user = mAuth.getCurrentUser();
 
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("id", user.getUid());
-                    map.put("name", user.getDisplayName());
-                    map.put("profile", user.getPhotoUrl().toString());
+                HashMap<String, Object> map = new HashMap<>();
+                assert user != null;
+                map.put(getString(R.string.id), user.getUid());
+                map.put(getString(R.string.name), user.getDisplayName());
+                map.put(getString(R.string.profile), Objects.requireNonNull(user.getPhotoUrl()).toString());
 
-                    database.getReference().child("users").child(user.getUid()).setValue(map);
+                database.getReference().child(getString(R.string.users)).child(user.getUid()).setValue(map);
 
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-                else
-                {
-                    Toast.makeText(LoginActivity.this, getString(R.string.could_not_sign_you_in), Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else
+            {
+                Toast.makeText(LoginActivity.this, getString(R.string.could_not_sign_you_in), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -136,18 +135,18 @@ public class LoginActivity extends AppCompatActivity
 
         if (pemail.isEmpty())
         {
-            email.setError("This field cannot be empty!");
+            email.setError(getString(R.string.this_field_cannot_be_empty));
             status = false;
         }
-        else if (!pemail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))
+        else if (!pemail.matches(getString(R.string.a_za_z0_9_a_za_z0_9_a_za_z_2)))
         {
-            email.setError("Email must follow correct format!");
+            email.setError(getString(R.string.email_must_follow_correct_format));
             status = false;
         }
 
         if (ppassword.isEmpty())
         {
-            password.setError("This field cannot be empty!");
+            password.setError(getString(R.string.this_field_cannot_be_empty));
             status = false;
         }
 

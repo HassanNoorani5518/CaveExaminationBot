@@ -1,4 +1,8 @@
 package ca.teambot.it.cave.examination.bot;
+//Adrian Portal Calcines n01489363 0CA
+//Alfred Dowuona <student id> 0CA
+//Ali Mohebi <student id> <section code>
+//Hassan Noorani <student id> 0CB
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,8 +16,8 @@ public class SplashActivity extends AppCompatActivity {
 
     private boolean checkLoginState()
     {
-        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean("isLoggedIn", false);
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.loginprefs), Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(getString(R.string.isloggedin), false);
     }
 
     @Override

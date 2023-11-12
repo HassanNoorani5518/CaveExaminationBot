@@ -1,4 +1,8 @@
 package ca.teambot.it.cave.examination.bot;
+//Adrian Portal Calcines n01489363 0CA
+//Alfred Dowuona <student id> 0CA
+//Ali Mohebi <student id> <section code>
+//Hassan Noorani <student id> 0CB
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -64,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, notificationsFragment).commit();
 
             case R.id.navigation_location:
-                getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, locationFragment);
+                getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, locationFragment).commit();
                 return true;
         }
         return false;
@@ -74,19 +78,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void onBackPressed() {
         // Display a confirmation dialog
         super.onBackPressed();
-        new AlertDialog.Builder(this)
-                .setTitle("Exit App")
-                .setMessage("Are you sure you want to exit?")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    // If the user confirms, finish the activity
-                    finish();
-                })
-                .setNegativeButton("No", (dialog, which) -> {
-                    // If the user cancels, dismiss the dialog
-                    dialog.dismiss();
-                })
-                .setIcon(getDrawable(R.drawable.baseline_privacy_tip_24))
-                .show();
+        showExitAlertDialog();
     }
 
     @Override
@@ -97,21 +89,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return true;
     }
 
-    private void showExitAlertDialog() {
+    public void showExitAlertDialog() {
         // Create an AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setTitle("Exit Confirmation");
-        builder.setMessage("Do you want to exit the app?");
+        builder.setTitle(R.string.exit_confirmation);
+        builder.setMessage(R.string.do_you_want_to_exit_the_app);
 
         // Add buttons to the AlertDialog
-        builder.setPositiveButton("Exit", (dialog, which) -> {
+        builder.setPositiveButton(R.string.exit, (dialog, which) -> {
             // Close the app
             finish();
+            System.exit(0);
         });
 
 
-        builder.setNegativeButton("Stay", (dialog, which) -> {
+        builder.setNegativeButton(R.string.stay, (dialog, which) -> {
             // User chose to stay, reset the flag
             backArrowPressed = false;
         });
@@ -119,13 +112,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         // Show the AlertDialog
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    public void exitApp() {
-
-        finish();
-        System.exit(0);
-
     }
 
     @Override
@@ -167,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
             else
             {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.ca")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.https_www_google_ca))));
             }
             return true;
         }
@@ -182,10 +168,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == INTERNET_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_main), "Permission granted.", Snackbar.LENGTH_SHORT);
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_main), R.string.permission_granted, Snackbar.LENGTH_SHORT);
                 snackbar.show();
             } else {
-                Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_main), "Permission was not granted.", Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_main), R.string.permission_was_not_granted, Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
         }
