@@ -145,6 +145,19 @@ public class NotificationsFragment extends Fragment {
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+            Uri selectedImageUri = data.getData();
+            profileImageView.setImageURI(selectedImageUri);
+
+            // ADD/UPDATE TO FIREBASE HERE
+        }
+    }
+
+
 
     public class NotificationUtils {
 
