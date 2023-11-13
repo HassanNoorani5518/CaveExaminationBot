@@ -72,6 +72,11 @@ public class NotificationsFragment extends Fragment {
     }
 
 
+    private String getSavedTheme() {
+        SharedPreferences preferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        return preferences.getString(THEME_PREFERENCE_KEY, LIGHT_THEME);
+    }
+
 
 
 
