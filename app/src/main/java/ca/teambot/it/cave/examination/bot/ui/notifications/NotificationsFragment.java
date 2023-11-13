@@ -81,6 +81,18 @@ public class NotificationsFragment extends Fragment {
 
 
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Lock the orientation to portrait when the device is rotated
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+    }
+
 
 
 
