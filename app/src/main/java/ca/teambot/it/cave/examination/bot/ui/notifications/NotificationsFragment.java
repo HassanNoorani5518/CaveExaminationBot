@@ -79,6 +79,16 @@ public class NotificationsFragment extends Fragment {
 
 
 
+    private void saveThemePreference(String theme) {
+        SharedPreferences preferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(THEME_PREFERENCE_KEY, theme);
+        editor.apply();
+    }
+
+
+
+
 
 
     @Override
