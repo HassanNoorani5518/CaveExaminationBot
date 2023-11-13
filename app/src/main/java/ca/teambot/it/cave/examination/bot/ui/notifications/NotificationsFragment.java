@@ -88,6 +88,20 @@ public class NotificationsFragment extends Fragment {
 
 
 
+    private void applyTheme(String theme) {
+        if (theme.equals(DARK_THEME)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        if (getActivity() != null) {
+            getActivity().recreate();
+        }
+    }
+
+
+
 
 
 
