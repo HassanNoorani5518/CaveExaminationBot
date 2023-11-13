@@ -5,10 +5,14 @@ package ca.teambot.it.cave.examination.bot.ui.notifications;
 //Hassan Noorani n01485518 0CB
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +24,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import ca.teambot.it.cave.examination.bot.MainActivity;
 import ca.teambot.it.cave.examination.bot.R;
@@ -30,6 +35,10 @@ public class NotificationsFragment extends Fragment {
     private static final String THEME_PREFERENCE_KEY = "theme_preference";
     private static final String LIGHT_THEME = "light";
     private static final String DARK_THEME = "dark";
+
+    private static final int PICK_IMAGE_REQUEST = 1;
+
+    private ImageView profileImageView;
 
     public NotificationsFragment()
     {
@@ -43,6 +52,12 @@ public class NotificationsFragment extends Fragment {
         Button switchThemeButton = view.findViewById(R.id.switchThemeButton);
 
         switchThemeButton.setOnClickListener(v -> toggleTheme());
+
+        profileImageView = view.findViewById(R.id.profileImageView);
+        Button changeProfilePictureButton = view.findViewById(R.id.changeProfilePictureButton);
+
+        changeProfilePictureButton.setOnClickListener(v -> openImagePicker());
+
 
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -123,8 +138,6 @@ public class NotificationsFragment extends Fragment {
             requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
-
-
 
 
 
