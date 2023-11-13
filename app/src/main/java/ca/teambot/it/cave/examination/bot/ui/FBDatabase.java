@@ -2,7 +2,7 @@ package ca.teambot.it.cave.examination.bot.ui;
 //Adrian Portal Calcines n01489363 0CA
 //Alfred Dowuona <student id> 0CA
 //Ali Mohebi <student id> <section code>
-//Hassan Noorani <student id> 0CB
+//Hassan Noorani n01485518 0CB
 
 import android.content.Intent;
 import android.content.SharedPreferences;
