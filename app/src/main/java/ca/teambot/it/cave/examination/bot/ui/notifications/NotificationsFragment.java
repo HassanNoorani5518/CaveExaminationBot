@@ -103,6 +103,13 @@ public class NotificationsFragment extends Fragment {
 
 
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    }
+
 
 
     @Override
