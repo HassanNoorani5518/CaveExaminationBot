@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Create a layout for individual alert items -->
+<!-- Customize based on your design requirements -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/alertTypeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alert Type"
+        android:typeface="serif"
+        android:textStyle="normal"/>
+
+    <TextView
+        android:id="@+id/alertMessageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alert Message"
+        android:typeface="serif"
+        android:textStyle="bold"
+        android:textColor="#E91E4D"/>
+
+    <!-- Add other UI elements as needed -->
+
+</LinearLayout>

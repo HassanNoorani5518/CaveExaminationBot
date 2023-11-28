@@ -10,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import ca.teambot.it.cave.examination.bot.R;
 
 
 public class NotificationsFragment extends Fragment {
 
+    private RecyclerView
     public NotificationsFragment()
     {
 
