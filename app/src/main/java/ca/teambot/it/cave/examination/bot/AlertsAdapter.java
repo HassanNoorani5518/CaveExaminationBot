@@ -12,9 +12,9 @@ import java.util.List;
 
 public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertViewHolder> {
 
-    private List<AlertModel> alertsList;
+    private List<AlertsNotification> alertsList;
 
-    public void setAlertsList(List<AlertModel> alertsList) {
+    public void setAlertsList(List<AlertsNotification> alertsList) {
         this.alertsList = alertsList;
         notifyDataSetChanged();
     }
@@ -28,10 +28,9 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertViewH
 
     @Override
     public void onBindViewHolder(@NonNull AlertViewHolder holder, int position) {
-        AlertModel alert = alertsList.get(position);
+        AlertsNotification alert = alertsList.get(position);
         holder.alertTypeTextView.setText(alert.getType());
         holder.alertMessageTextView.setText(alert.getMessage());
-        // Bind other data as needed
     }
 
     @Override
