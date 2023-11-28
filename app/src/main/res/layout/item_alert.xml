@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Create a layout for individual alert items -->
-<!-- Customize based on your design requirements -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/back">
 
     <TextView
         android:id="@+id/alertTypeTextView"
@@ -23,7 +22,5 @@
         android:typeface="serif"
         android:textStyle="bold"
         android:textColor="#E91E4D"/>
-
-    <!-- Add other UI elements as needed -->
 
 </LinearLayout>
