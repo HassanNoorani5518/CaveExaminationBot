@@ -55,18 +55,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.navigation_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, homeFragment).commit();
                 return true;
             case R.id.navigation_dashboard:
                 getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, dashboardFragment).commit();
+                return true;
             case R.id.navigation_notifications:
                 getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, notificationsFragment).commit();
-
+                return true;
             case R.id.navigation_location:
                 getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, locationFragment).commit();
                 return true;

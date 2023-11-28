@@ -82,5 +82,7 @@
     <string name="are_you_sure_you_want_to_exit">Êtes-vous sûr de vouloir quitter?</string>
     <string name="user">Utilisateur</string>
     <string name="the_passwords_do_not_match">Le mot de passe ne correspond pas!</string>
+    <string name="change_picture">Change picture</string>
+    <string name="switch_theme">Switch Theme</string>
     />
 </resources>

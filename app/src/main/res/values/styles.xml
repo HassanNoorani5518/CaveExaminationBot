@@ -11,7 +11,6 @@
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <!-- Your dark theme attributes go here -->
     </style>
-
 </resources>
 
 
