@@ -23,6 +23,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import java.util.Collections;
 
@@ -32,6 +33,7 @@ public class Robotcontrol extends Fragment {
     private CameraDevice cameraDevice;
     private TextureView textureView;
     private static final int CAMERA_PERMISSION_REQUEST = 4;
+    ImageButton upArrow, rightArrow, downArrow, leftArrow, flashlight;
 
     public Robotcontrol() {
         // Required empty public constructor
@@ -43,6 +45,29 @@ public class Robotcontrol extends Fragment {
 
         textureView = view.findViewById(R.id.textureView);
         textureView.setSurfaceTextureListener(textureListener);
+
+        upArrow = view.findViewById(R.id.imageButton2);
+        rightArrow = view.findViewById(R.id.imageButton5);
+        downArrow = view.findViewById(R.id.imageButton4);
+        leftArrow = view.findViewById(R.id.imageButton3);
+        flashlight = view.findViewById(R.id.imageButton6);
+
+        upArrow.setOnClickListener(view1 -> {
+            moveForward();
+        });
+        rightArrow.setOnClickListener(view12 -> {
+            moveRight();
+        });
+        downArrow.setOnClickListener(view13 -> {
+            moveDown();
+        });
+        leftArrow.setOnClickListener(view14 -> {
+            moveLeft();
+        });
+        flashlight.setOnClickListener(view15 -> {
+            toggleFlashlight();
+        });
+
 
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
         {
@@ -160,4 +185,21 @@ public class Robotcontrol extends Fragment {
             cameraDevice = null;
         }
     }
+
+    public void moveForward()
+    {
+    }
+    public void moveRight()
+    {
+    }
+    public void moveDown()
+    {
+    }
+    public void moveLeft()
+    {
+    }
+    public void toggleFlashlight()
+    {
+    }
+
 }
