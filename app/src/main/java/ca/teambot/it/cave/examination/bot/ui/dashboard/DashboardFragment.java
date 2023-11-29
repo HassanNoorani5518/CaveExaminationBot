@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import ca.teambot.it.cave.examination.bot.Datareading;
 import ca.teambot.it.cave.examination.bot.MainActivity;
 import ca.teambot.it.cave.examination.bot.R;
+import ca.teambot.it.cave.examination.bot.Robotcontrol;
 import ca.teambot.it.cave.examination.bot.SettingsFragment;
 
 public class DashboardFragment extends Fragment
@@ -27,6 +28,7 @@ public class DashboardFragment extends Fragment
     Button settings, dataRead, robotControl, random;
     SettingsFragment settingsFragment = new SettingsFragment();
     Datareading datareading = new Datareading();
+    Robotcontrol robotcontrol = new Robotcontrol();
 
     public DashboardFragment()
     {
@@ -73,7 +75,7 @@ public class DashboardFragment extends Fragment
     {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.activity_main, settingsFragment);
+        fragmentTransaction.replace(R.id.activity_main, robotcontrol);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
