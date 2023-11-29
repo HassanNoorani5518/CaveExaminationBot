@@ -7,11 +7,20 @@ package ca.teambot.it.cave.examination.bot.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import android.content.Context;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import ca.teambot.it.cave.examination.bot.DataGeneration;
 import ca.teambot.it.cave.examination.bot.LoginActivity;
 import ca.teambot.it.cave.examination.bot.MainActivity;
 import ca.teambot.it.cave.examination.bot.R;
@@ -88,5 +97,19 @@ public class FBDatabase
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(context.getString(R.string.isloggedin), isLoggedIn);
         editor.apply();
+    }
+
+    public void populateData()
+    {
+        DataGeneration dataGeneration = new DataGeneration();
+        String time = generateUniqueKey("test");
+
+        addItem("SensorData", time, "Time", dataGeneration.getCurrentTime());
+        addItem("SensorData", time, "Temperature", DataGeneration.generateTemperature());
+        addItem("SensorData", time, "Gas Level", DataGeneration.generateGasConcentration());
+        addItem("SensorData", time, "Humidity", DataGeneration.generateHumidity());
+        addItem("SensorData", time, "Air Pressure", DataGeneration.generateAirPressure());
+        addItem("SensorData", time, "Magnetic Field", DataGeneration.generateMagneticField());
+        addItem("SensorData", time, "Cave Integrity", DataGeneration.generateCaveIntegrity());
     }
 }

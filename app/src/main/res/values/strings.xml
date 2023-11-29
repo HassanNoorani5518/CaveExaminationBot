@@ -83,5 +83,11 @@
     <string name="the_passwords_do_not_match">The passwords do not match!</string>
     <string name="change_picture">Change picture</string>
     <string name="switch_theme">Switch Theme</string>
+    <string name="generate_test_data">Generate test data</string>
+    <string name="fetching_data">Fetching data</string>
+    <string name="gas_level">"\n\nGas Level: "</string>
+    <string name="time">"Time: "</string>
+    <string name="_3f">%.3f</string>
+    <string name="s_s_air_pressure_s_temperature_s_humidity_s_s_s_magnetic_field_s_cave_integrity_s">%s%s\n\nAir Pressure: %s\n\nTemperature: %s\n\nHumidity: %s%s%s\n\nMagnetic Field: %s\n\nCave Integrity: %s</string>
     />
 </resources>
