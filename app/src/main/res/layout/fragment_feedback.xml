@@ -7,12 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.FeedbackFragment">
 
-    <RatingBar
-        android:id="@+id/ratingBar"
+    <EditText
+        android:id="@+id/editTextPhone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="448dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="188dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="@string/phone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,37 +25,31 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="126dp"
+        android:layout_marginTop="108dp"
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="text"
-        android:text="@string/name"
+        android:hint="@string/name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextPhone"
+    <RatingBar
+        android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="209dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:inputType="phone"
-        android:text="@string/phone"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="408dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextTextEmailAddress"
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="284dp"
-        android:ems="10"
-        android:importantForAutofill="no"
-        android:inputType="textEmailAddress"
-        android:text="@string/email"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="181dp"
+        android:layout_marginTop="466dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,12 +58,25 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="356dp"
+        android:layout_marginTop="336dp"
         android:ems="10"
         android:gravity="start|top"
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
-        android:text="@string/comment"
+        android:hint="@string/comment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTextEmailAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="264dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,9 +97,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="116dp"
-        android:layout_marginTop="544dp"
+        android:layout_marginTop="528dp"
         android:backgroundTint="@color/black"
         android:text="@string/submit_feedback"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

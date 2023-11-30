@@ -9,12 +9,15 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import com.google.android.material.snackbar.Snackbar;
+
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 
 import ca.teambot.it.cave.examination.bot.MainActivity;
@@ -25,6 +28,7 @@ public class FeedbackFragment extends Fragment {
     EditText firstName, phone, email, comment;
     Button button;
     RatingBar ratingBar;
+    ProgressBar progressBar;
 
     public FeedbackFragment()
     {
@@ -37,6 +41,7 @@ public class FeedbackFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_feedback, container, false);
 
         button = view.findViewById(R.id.button);
+        progressBar = view.findViewById(R.id.progressBar2);
 
         firstName = view.findViewById(R.id.editTextText);
         phone = view.findViewById(R.id.editTextPhone);
@@ -105,6 +110,8 @@ public class FeedbackFragment extends Fragment {
 
         if (status)
         {
+            progressBar.setVisibility(View.VISIBLE);
+            Handler handler = new Handler();
             FBDatabase fbDatabase = new FBDatabase();
 
             String uniqueFeedbackId = fbDatabase.generateUniqueKey(getString(R.string.feedback));
@@ -116,7 +123,10 @@ public class FeedbackFragment extends Fragment {
             fbDatabase.addItem(getString(R.string.feedback), uniqueFeedbackId, getString(R.string.phonemodel), phoneModel);
             fbDatabase.addItem(getString(R.string.feedback), uniqueFeedbackId, getString(R.string.ratingbar), String.valueOf(pratingBar));
 
-            Snackbar.make(phone, getString(R.string.feedback_submitted_thank_you), Snackbar.LENGTH_SHORT).show();
+            handler.postDelayed(() -> {
+                Snackbar.make(phone, getString(R.string.feedback_submitted_thank_you), Snackbar.LENGTH_SHORT).show();
+            }, 3000);
+            progressBar.setVisibility(View.GONE);
         }
     }
 }
