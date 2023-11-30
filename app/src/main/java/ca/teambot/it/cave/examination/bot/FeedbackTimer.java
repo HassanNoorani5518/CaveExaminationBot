@@ -6,34 +6,28 @@ import android.content.SharedPreferences;
 import java.util.concurrent.TimeUnit;
 
 public class FeedbackTimer {
-    private static final String PREF_NAME = "FeedbackTimerPrefs";
+    private static final String PREF_NAME_PREFIX = "FeedbackTimerPrefs_";
+
     private static final String LAST_SUBMISSION_TIME = "lastSubmissionTime";
 
-    private static SharedPreferences preferences;
+    private final SharedPreferences preferences;
 
-    public FeedbackTimer(Context context) {
-        if (preferences == null) {
-            preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        }
+    public FeedbackTimer(Context context, User user) {
+        preferences = context.getSharedPreferences(PREF_NAME_PREFIX + user.getUserId(), Context.MODE_PRIVATE);
     }
 
     public boolean canSubmitFeedback() {
         long lastSubmissionTime = preferences.getLong(LAST_SUBMISSION_TIME, 0);
         long currentTime = System.currentTimeMillis();
-
-        // Calculate the difference between the current time and the last submission time
         long timeDifference = currentTime - lastSubmissionTime;
 
-        // Check if 24 hours have passed since the last submission
-        return timeDifference >= 24 * 60 * 60 * 1000;
+        return timeDifference >= TimeUnit.HOURS.toMillis(24);
     }
 
-    public static String getTimeLeft() {
+    public String getTimeLeft() {
         long lastSubmissionTime = preferences.getLong(LAST_SUBMISSION_TIME, 0);
         long currentTime = System.currentTimeMillis();
         long submissionLimit = lastSubmissionTime + TimeUnit.HOURS.toMillis(24);
-
-        // Calculate the difference between the current time and the last submission time
         long timeDifference = submissionLimit - currentTime;
 
         if (timeDifference <= 0) {
@@ -48,7 +42,6 @@ public class FeedbackTimer {
     }
 
     public void markFeedbackSubmitted() {
-        // Save the current time when feedback is submitted
         preferences.edit().putLong(LAST_SUBMISSION_TIME, System.currentTimeMillis()).apply();
     }
 }

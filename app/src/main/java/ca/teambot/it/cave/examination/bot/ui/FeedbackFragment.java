@@ -13,6 +13,8 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -28,6 +30,7 @@ import android.widget.TextView;
 import ca.teambot.it.cave.examination.bot.FeedbackTimer;
 import ca.teambot.it.cave.examination.bot.MainActivity;
 import ca.teambot.it.cave.examination.bot.R;
+import ca.teambot.it.cave.examination.bot.User;
 
 public class FeedbackFragment extends Fragment {
 
@@ -36,6 +39,10 @@ public class FeedbackFragment extends Fragment {
     RatingBar ratingBar;
     ProgressBar progressBar;
     TextView timeLeft;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
+    FeedbackTimer feedbackTimer;
+    String userId = "";
 
     public FeedbackFragment()
     {
@@ -70,12 +77,18 @@ public class FeedbackFragment extends Fragment {
             return false;
         });
 
+        if (currentUser != null) {
+            userId = currentUser.getUid();
+            feedbackTimer = new FeedbackTimer(requireContext(), new User(userId));
+        }
+
         return view;
     }
 
     public void uploadFeedback()
     {
-        FeedbackTimer feedbackTimer = new FeedbackTimer(requireContext());
+        User currentUser = new User(userId);
+        FeedbackTimer feedbackTimer = new FeedbackTimer(requireContext(), currentUser);
         String pfirstName = firstName.getText().toString();
         String pphone = phone.getText().toString();
         String pemail = email.getText().toString();
@@ -118,8 +131,7 @@ public class FeedbackFragment extends Fragment {
             status = false;
         }
 
-        if (!feedbackTimer.canSubmitFeedback())
-        {
+        if (!feedbackTimer.canSubmitFeedback()) {
             status = false;
             timeLeft.setText("You can submit again in: " + feedbackTimer.getTimeLeft());
         }
@@ -139,7 +151,12 @@ public class FeedbackFragment extends Fragment {
             fbDatabase.addItem(getString(R.string.feedback), uniqueFeedbackId, getString(R.string.phonemodel), phoneModel);
             fbDatabase.addItem(getString(R.string.feedback), uniqueFeedbackId, getString(R.string.ratingbar), String.valueOf(pratingBar));
 
-            handler.postDelayed(this::alertDialog, 5000);
+            handler.postDelayed(() -> {
+                alertDialog();
+                progressBar.setVisibility(View.GONE);
+                feedbackTimer.markFeedbackSubmitted();
+                button.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.grey));
+            }, 5000);
 
             firstName.setText("");
             phone.setText("");
@@ -147,9 +164,6 @@ public class FeedbackFragment extends Fragment {
             comment.setText("");
             ratingBar.setRating(0);
 
-            progressBar.setVisibility(View.GONE);
-            feedbackTimer.markFeedbackSubmitted();
-            button.setBackgroundTintList((getResources().getColorStateList(R.color.grey)));
         }
     }
 
