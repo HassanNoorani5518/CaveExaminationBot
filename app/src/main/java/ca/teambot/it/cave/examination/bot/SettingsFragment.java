@@ -90,14 +90,16 @@ public class SettingsFragment extends Fragment
     }
 
     private String getSavedTheme(String userId) {
-        SharedPreferences preferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
-        return preferences.getString(THEME_PREFERENCE_KEY + userId, LIGHT_THEME);
+        // Use a different name for preferences based on the user ID
+        SharedPreferences preferences = requireContext().getSharedPreferences(userId + "_" + THEME_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        return preferences.getString(THEME_PREFERENCE_KEY, LIGHT_THEME);
     }
 
     private void saveThemePreference(String userId, String theme) {
-        SharedPreferences preferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        // Use a different name for preferences based on the user ID
+        SharedPreferences preferences = requireContext().getSharedPreferences(userId + "_" + THEME_PREFERENCE_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(THEME_PREFERENCE_KEY + userId, theme);
+        editor.putString(THEME_PREFERENCE_KEY, theme);
         editor.apply();
     }
 

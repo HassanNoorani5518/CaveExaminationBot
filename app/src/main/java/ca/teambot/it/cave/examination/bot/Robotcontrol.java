@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
+import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
@@ -24,6 +25,8 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Collections;
 
@@ -209,15 +212,32 @@ public class Robotcontrol extends Fragment {
     }
     private void toggleFlashlight() {
         try {
-            if (isFlashlightOn) {
-                cameraManager.setTorchMode(cameraId, false);
-                isFlashlightOn = false;
-            } else {
-                cameraManager.setTorchMode(cameraId, true);
-                isFlashlightOn = true;
+            if (isFlashAvailable()) {
+                if (isFlashlightOn) {
+                    cameraManager.setTorchMode(cameraId, false);
+                    isFlashlightOn = false;
+                } else {
+                    cameraManager.setTorchMode(cameraId, true);
+                    isFlashlightOn = true;
+                }
             }
         } catch (CameraAccessException e) {
             e.printStackTrace();
+        }
+    }
+
+    private boolean isFlashAvailable() {
+        try {
+            // Get the characteristics of the camera with the given ID
+            CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraId);
+
+            // Check if the flash unit is available
+            Boolean flashAvailable = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
+
+            return flashAvailable != null && flashAvailable;
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

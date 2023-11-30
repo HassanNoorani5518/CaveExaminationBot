@@ -5,29 +5,43 @@ package ca.teambot.it.cave.examination.bot.ui.home;
 //Hassan Noorani n01485518 0CB
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import ca.teambot.it.cave.examination.bot.FeedbackTimer;
 import ca.teambot.it.cave.examination.bot.LoginActivity;
 import ca.teambot.it.cave.examination.bot.MainActivity;
 import ca.teambot.it.cave.examination.bot.R;
+import ca.teambot.it.cave.examination.bot.User;
 
 public class HomeFragment extends Fragment
 {
+    private static final String PROFILE_PICTURE_PREFERENCE_KEY = "profile_picture_preference_user_";
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
     TextView textView;
+    ImageView imageView;
     FirebaseAuth auth;
     FirebaseUser user;
+    String userId = "";
 
     public HomeFragment()
     {
@@ -39,6 +53,14 @@ public class HomeFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         textView = view.findViewById(R.id.textView6);
+        imageView = view.findViewById(R.id.imageView);
+
+        if (currentUser != null) {
+            userId = currentUser.getUid();
+            Uri profilePictureUri = getProfilePictureUri(userId);
+            loadProfilePicture(profilePictureUri);
+        }
+
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         if (user == null)
@@ -48,16 +70,13 @@ public class HomeFragment extends Fragment
         }
         else
         {
-            textView.setText(String.format(getString(R.string.s_s_s), getString(R.string.logged_in_as), getString(R.string.space), user.getEmail()));
+            textView.setText(user.getEmail());
         }
 
         ImageView fadingImage = view.findViewById(R.id.fade_cavebot);
 
-        // Create an AlphaAnimation to fade the image in
         Animation fadeInAnimation = new AlphaAnimation(0.0f, 1.0f);
-        fadeInAnimation.setDuration(1000); // Adjust the duration as needed (in milliseconds)
-
-        // Set an AnimationListener to control visibility when the animation ends
+        fadeInAnimation.setDuration(1000);
         fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -65,7 +84,6 @@ public class HomeFragment extends Fragment
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                // Make the image visible when the animation ends
                 fadingImage.setVisibility(View.VISIBLE);
             }
 
@@ -73,8 +91,6 @@ public class HomeFragment extends Fragment
             public void onAnimationRepeat(Animation animation) {
             }
         });
-
-        // Start the animation
         fadingImage.startAnimation(fadeInAnimation);
 
         view.setFocusableInTouchMode(true);
@@ -88,5 +104,19 @@ public class HomeFragment extends Fragment
         });
 
         return view;
+    }
+
+    private Uri getProfilePictureUri(String userId) {
+        SharedPreferences preferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        String uriString = preferences.getString(PROFILE_PICTURE_PREFERENCE_KEY + userId, null);
+        return (uriString != null) ? Uri.parse(uriString) : null;
+    }
+
+    private void loadProfilePicture(Uri profilePictureUri) {
+        if (profilePictureUri != null) {
+            Glide.with(this)
+                    .load(profilePictureUri)
+                    .into(imageView);
+        }
     }
 }
