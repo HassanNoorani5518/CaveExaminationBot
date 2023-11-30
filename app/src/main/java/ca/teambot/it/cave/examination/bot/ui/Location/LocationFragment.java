@@ -96,8 +96,5 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
             return;
         }
         mMap.setMyLocationEnabled(true);  // Enables the blue dot representing user's location
-        LatLng ontario = new LatLng(51, 85);
-        mMap.addMarker(new MarkerOptions().position(ontario).title(getString(R.string.ontario)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(ontario));
     }
 }
