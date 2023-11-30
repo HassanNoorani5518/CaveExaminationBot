@@ -21,15 +21,23 @@ import android.os.Build;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SettingsFragment extends Fragment
 {
-    private static final String THEME_PREFERENCE_KEY = "theme_preference";
+    private static final String THEME_PREFERENCE_KEY = "theme_preference_";
+    private static final String PROFILE_PICTURE_PREFERENCE_KEY = "profile_picture_preference_user_";
+
     private static final String LIGHT_THEME = "light";
     private static final String DARK_THEME = "dark";
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private ImageView profileImageView;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
+    String userId = "";
 
 
     public SettingsFragment() {
@@ -43,7 +51,10 @@ public class SettingsFragment extends Fragment
 
         Button switchThemeButton = view.findViewById(R.id.switchThemeButton);
 
-        switchThemeButton.setOnClickListener(v -> toggleTheme());
+        if (currentUser != null) {
+            userId = currentUser.getUid();
+            switchThemeButton.setOnClickListener(v -> toggleTheme(userId));
+        }
 
         profileImageView = view.findViewById(R.id.profileImageView);
         Button changeProfilePictureButton = view.findViewById(R.id.changeProfilePictureButton);
@@ -64,36 +75,31 @@ public class SettingsFragment extends Fragment
         return view;
     }
 
-    private void toggleTheme() {
+    private void toggleTheme(String userId) {
         // Get the current theme preference
-        String currentTheme = getSavedTheme();
+        String currentTheme = getSavedTheme(userId);
 
         // Toggle between light and dark themes
         String newTheme = (currentTheme.equals(DARK_THEME)) ? LIGHT_THEME : DARK_THEME;
 
         // Save the new theme preference
-        saveThemePreference(newTheme);
+        saveThemePreference(userId, newTheme);
 
         // Apply the new theme
         applyTheme(newTheme);
     }
 
-
-    private String getSavedTheme() {
+    private String getSavedTheme(String userId) {
         SharedPreferences preferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
-        return preferences.getString(THEME_PREFERENCE_KEY, LIGHT_THEME);
+        return preferences.getString(THEME_PREFERENCE_KEY + userId, LIGHT_THEME);
     }
 
-
-
-    private void saveThemePreference(String theme) {
+    private void saveThemePreference(String userId, String theme) {
         SharedPreferences preferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(THEME_PREFERENCE_KEY, theme);
+        editor.putString(THEME_PREFERENCE_KEY + userId, theme);
         editor.apply();
     }
-
-
 
     private void applyTheme(String theme) {
         if (theme.equals(DARK_THEME)) {
@@ -107,9 +113,6 @@ public class SettingsFragment extends Fragment
         }
     }
 
-
-
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -117,13 +120,10 @@ public class SettingsFragment extends Fragment
         requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
-
-
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        // Lock the orientation to portrait when the device is rotated
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -136,6 +136,12 @@ public class SettingsFragment extends Fragment
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
+    private void saveProfilePicture(String userId, Uri selectedImageUri) {
+        SharedPreferences preferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(PROFILE_PICTURE_PREFERENCE_KEY + userId, selectedImageUri.toString());
+        editor.apply();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -145,22 +151,7 @@ public class SettingsFragment extends Fragment
             Uri selectedImageUri = data.getData();
             profileImageView.setImageURI(selectedImageUri);
 
-            // ADD/UPDATE TO FIREBASE HERE
-        }
-    }
-
-
-
-    public class NotificationUtils {
-
-        public boolean hasNotificationPolicyAccess(Context context) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                if (notificationManager != null) {
-                    return notificationManager.isNotificationPolicyAccessGranted();
-                }
-            }
-            return false;
+            saveProfilePicture(userId, selectedImageUri);
         }
     }
 }
