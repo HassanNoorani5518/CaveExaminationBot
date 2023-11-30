@@ -92,5 +92,8 @@
     <string name="s_s_air_pressure_s_temperature_s_humidity_s_s_s_magnetic_field_s_cave_integrity_s">%s%s\n\nPression de l\'air: %s\n\nTempérature: %s\n\nHumidité: %s%s%s\n\nChamp magnétique: %s\n\nIntégrité de la grotte: %s</string>
     <string name="a_z_a_z_d_a_za_z_d_6"><![CDATA[^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$]]></string>
     <string name="password_must_follow_correct_format">Password must follow correct format!</string>
+    <string name="feedback_submission">Feedback submission</string>
+    <string name="your_feedback_was_successful">Your feedback was successful!</string>
+    <string name="ok">OK</string>
     />
 </resources>

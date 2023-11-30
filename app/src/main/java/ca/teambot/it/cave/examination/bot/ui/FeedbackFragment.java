@@ -4,6 +4,8 @@ package ca.teambot.it.cave.examination.bot.ui;
 //Ali Mohebi <student id> <section code>
 //Hassan Noorani <student id> 0CB
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -123,9 +125,7 @@ public class FeedbackFragment extends Fragment {
             fbDatabase.addItem(getString(R.string.feedback), uniqueFeedbackId, getString(R.string.phonemodel), phoneModel);
             fbDatabase.addItem(getString(R.string.feedback), uniqueFeedbackId, getString(R.string.ratingbar), String.valueOf(pratingBar));
 
-            handler.postDelayed(() -> {
-                Snackbar.make(phone, getString(R.string.feedback_submitted_thank_you), Snackbar.LENGTH_SHORT).show();
-            }, 3000);
+            handler.postDelayed(this::alertDialog, 5000);
 
             firstName.setText("");
             phone.setText("");
@@ -135,5 +135,17 @@ public class FeedbackFragment extends Fragment {
 
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    public void alertDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setTitle(R.string.feedback_submission);
+        builder.setMessage(R.string.your_feedback_was_successful);
+
+        builder.setPositiveButton(R.string.ok, (dialog, id) -> dialog.dismiss());
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
