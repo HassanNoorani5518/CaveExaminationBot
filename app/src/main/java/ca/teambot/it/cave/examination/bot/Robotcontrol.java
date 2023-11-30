@@ -30,6 +30,7 @@ import java.util.Collections;
 public class Robotcontrol extends Fragment {
     private CameraManager cameraManager;
     private String cameraId;
+    private boolean isFlashlightOn = false;
     private CameraDevice cameraDevice;
     private TextureView textureView;
     private static final int CAMERA_PERMISSION_REQUEST = 4;
@@ -51,6 +52,14 @@ public class Robotcontrol extends Fragment {
         downArrow = view.findViewById(R.id.imageButton4);
         leftArrow = view.findViewById(R.id.imageButton3);
         flashlight = view.findViewById(R.id.imageButton6);
+
+        cameraManager = (CameraManager) requireActivity().getSystemService(Context.CAMERA_SERVICE);
+
+        try {
+            cameraId = cameraManager.getCameraIdList()[0]; // Use the first camera
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
 
         upArrow.setOnClickListener(view1 -> {
             moveForward();
@@ -198,8 +207,18 @@ public class Robotcontrol extends Fragment {
     public void moveLeft()
     {
     }
-    public void toggleFlashlight()
-    {
+    private void toggleFlashlight() {
+        try {
+            if (isFlashlightOn) {
+                cameraManager.setTorchMode(cameraId, false);
+                isFlashlightOn = false;
+            } else {
+                cameraManager.setTorchMode(cameraId, true);
+                isFlashlightOn = true;
+            }
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
     }
 
 }

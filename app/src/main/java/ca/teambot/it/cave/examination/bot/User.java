@@ -14,11 +14,4 @@ public class User
     public String getUserId() {
         return userId;
     }
-
-
-
-        if (currentUser != null) {
-
-            userId = currentUser.getUid();
-        }
 }
