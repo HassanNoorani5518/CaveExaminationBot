@@ -22,6 +22,7 @@ import ca.teambot.it.cave.examination.bot.MainActivity;
 import ca.teambot.it.cave.examination.bot.R;
 import ca.teambot.it.cave.examination.bot.Robotcontrol;
 import ca.teambot.it.cave.examination.bot.SettingsFragment;
+import ca.teambot.it.cave.examination.bot.UpdatesAndContactFragment;
 
 public class DashboardFragment extends Fragment
 {
@@ -29,6 +30,8 @@ public class DashboardFragment extends Fragment
     SettingsFragment settingsFragment = new SettingsFragment();
     Datareading datareading = new Datareading();
     Robotcontrol robotcontrol = new Robotcontrol();
+
+    UpdatesAndContactFragment updatesAndContactFragment = new UpdatesAndContactFragment();
 
     public DashboardFragment()
     {
@@ -47,7 +50,7 @@ public class DashboardFragment extends Fragment
         settings.setOnClickListener(v -> navigateToSettingsFragment());
         robotControl.setOnClickListener(v -> navigateToRobotControlFragment());
         dataRead.setOnClickListener(v -> navigateToDataReadingFragment());
-        random.setOnClickListener(v -> navigateToRandomFragment());
+        random.setOnClickListener(v -> navigateToUpdatesAndContactFragment());
 
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -89,11 +92,11 @@ public class DashboardFragment extends Fragment
         fragmentTransaction.commit();
     }
 
-    private void navigateToRandomFragment()
+    private void navigateToUpdatesAndContactFragment()
     {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.activity_main, settingsFragment);
+        fragmentTransaction.replace(R.id.activity_main, updatesAndContactFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
