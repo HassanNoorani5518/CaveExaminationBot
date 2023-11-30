@@ -71,7 +71,7 @@ public class FeedbackFragment extends Fragment {
         String pemail = email.getText().toString();
         String pcomment = comment.getText().toString();
         String phoneModel = Build.MODEL;
-        int pratingBar = ratingBar.getNumStars();
+        float pratingBar = ratingBar.getRating();
 
         boolean status = true;
 
@@ -126,6 +126,13 @@ public class FeedbackFragment extends Fragment {
             handler.postDelayed(() -> {
                 Snackbar.make(phone, getString(R.string.feedback_submitted_thank_you), Snackbar.LENGTH_SHORT).show();
             }, 3000);
+
+            firstName.setText("");
+            phone.setText("");
+            email.setText("");
+            comment.setText("");
+            ratingBar.setRating(0);
+
             progressBar.setVisibility(View.GONE);
         }
     }
