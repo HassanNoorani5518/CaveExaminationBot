@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity
                 password.setError(getString(R.string.this_field_cannot_be_empty));
                 status = false;
             }
-            if (ppassword.matches(getString(R.string.a_z_a_z_d_a_za_z_d_6)))
+            if (!ppassword.matches(getString(R.string.a_z_a_z_d_a_za_z_d_6)))
             {
                 password.setError(getString(R.string.password_must_follow_correct_format));
                 status = false;

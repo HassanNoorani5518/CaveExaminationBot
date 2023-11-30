@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.FeedbackFragment">
 
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="576dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/editTextPhone"
         android:layout_width="wrap_content"
@@ -15,8 +25,8 @@
         android:layout_marginTop="188dp"
         android:autofillHints=""
         android:ems="10"
-        android:inputType="phone"
         android:hint="@string/phone"
+        android:inputType="phone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,9 +37,9 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="108dp"
         android:ems="10"
+        android:hint="@string/name"
         android:importantForAutofill="no"
         android:inputType="text"
-        android:hint="@string/name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,9 +71,9 @@
         android:layout_marginTop="336dp"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="@string/comment"
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
-        android:hint="@string/comment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,9 +84,9 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="264dp"
         android:ems="10"
+        android:hint="@string/email"
         android:importantForAutofill="no"
         android:inputType="textEmailAddress"
-        android:hint="@string/email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -6,9 +6,11 @@ package ca.teambot.it.cave.examination.bot.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -21,7 +23,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
+import ca.teambot.it.cave.examination.bot.FeedbackTimer;
 import ca.teambot.it.cave.examination.bot.MainActivity;
 import ca.teambot.it.cave.examination.bot.R;
 
@@ -31,6 +35,7 @@ public class FeedbackFragment extends Fragment {
     Button button;
     RatingBar ratingBar;
     ProgressBar progressBar;
+    TextView timeLeft;
 
     public FeedbackFragment()
     {
@@ -44,6 +49,8 @@ public class FeedbackFragment extends Fragment {
 
         button = view.findViewById(R.id.button);
         progressBar = view.findViewById(R.id.progressBar2);
+
+        timeLeft = view.findViewById(R.id.textView12);
 
         firstName = view.findViewById(R.id.editTextText);
         phone = view.findViewById(R.id.editTextPhone);
@@ -68,6 +75,7 @@ public class FeedbackFragment extends Fragment {
 
     public void uploadFeedback()
     {
+        FeedbackTimer feedbackTimer = new FeedbackTimer(requireContext());
         String pfirstName = firstName.getText().toString();
         String pphone = phone.getText().toString();
         String pemail = email.getText().toString();
@@ -110,6 +118,12 @@ public class FeedbackFragment extends Fragment {
             status = false;
         }
 
+        if (!feedbackTimer.canSubmitFeedback())
+        {
+            status = false;
+            timeLeft.setText("You can submit again in: " + feedbackTimer.getTimeLeft());
+        }
+
         if (status)
         {
             progressBar.setVisibility(View.VISIBLE);
@@ -134,6 +148,8 @@ public class FeedbackFragment extends Fragment {
             ratingBar.setRating(0);
 
             progressBar.setVisibility(View.GONE);
+            feedbackTimer.markFeedbackSubmitted();
+            button.setBackgroundTintList((getResources().getColorStateList(R.color.grey)));
         }
     }
 
