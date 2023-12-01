@@ -95,5 +95,7 @@
     <string name="your_feedback_was_successful">Your feedback was successful!</string>
     <string name="ok">OK</string>
     <string name="message" />
+    <string name="Email" />
+    <string name="done" />
     />
 </resources>
