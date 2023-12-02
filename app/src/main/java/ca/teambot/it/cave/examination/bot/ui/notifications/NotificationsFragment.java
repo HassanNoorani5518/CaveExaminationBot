@@ -51,6 +51,8 @@ public class NotificationsFragment extends Fragment {
 
     }
 
+
+
     public NotificationsFragment()
     {
 
