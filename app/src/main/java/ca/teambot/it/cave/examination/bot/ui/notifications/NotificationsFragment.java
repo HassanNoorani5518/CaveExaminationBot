@@ -17,7 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import ca.teambot.it.cave.examination.bot.AlertsAdapter;
@@ -33,8 +32,8 @@ public class NotificationsFragment extends Fragment {
     private AlertsAdapter alertsAdapter;
 
     private DatabaseReference databaseReference;
-
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_notifications, container, false);
 
         alertsRecyclerView = view.findViewById(R.id.alertsRecyclerView);
@@ -49,36 +48,30 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void retrieveAlerts() {
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<AlertsNotification> alertsList = new ArrayList<>();
 
-                // Loop through the "Errors" children
                 for (DataSnapshot errorSnapshot : dataSnapshot.getChildren()) {
-                    // Shuffle the children to get a random message
-                    List<DataSnapshot> typeSnapshots = new ArrayList<>(errorSnapshot.getChildren());
-                    Collections.shuffle(typeSnapshots);
+                    for (DataSnapshot typeSnapshot : errorSnapshot.getChildren()) {
+                        String type = typeSnapshot.getKey();
+                        String message = typeSnapshot.getValue(String.class);
 
-                    // Pick the first child as a random message
-                    DataSnapshot randomTypeSnapshot = typeSnapshots.get(0);
-
-                    // Get type and message from the random child
-                    String type = randomTypeSnapshot.getKey();
-                    String message = randomTypeSnapshot.getValue(String.class);
-
-                    // Create an AlertsNotification object and add it to the list
-                    alertsList.add(new AlertsNotification(type, message));
+                        alertsList.add(new AlertsNotification(type, message));
+                    }
                 }
 
-                // Update the RecyclerView with the retrieved alerts
                 alertsAdapter.setAlertsList(alertsList);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors if needed
             }
         });
+    }
+
+    public NotificationsFragment() {
+        // Default constructor
     }
 }
