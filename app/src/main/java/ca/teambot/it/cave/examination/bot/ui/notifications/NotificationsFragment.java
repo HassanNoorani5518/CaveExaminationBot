@@ -12,12 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import ca.teambot.it.cave.examination.bot.AlertsAdapter;
 import ca.teambot.it.cave.examination.bot.AlertsNotification;
 import ca.teambot.it.cave.examination.bot.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class NotificationsFragment extends Fragment {
@@ -25,13 +32,16 @@ public class NotificationsFragment extends Fragment {
     private RecyclerView alertsRecyclerView;
     private AlertsAdapter alertsAdapter;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    private DatabaseReference databaseReference;
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notifications, container, false);
 
         alertsRecyclerView = view.findViewById(R.id.alertsRecyclerView);
-        alertsAdapter = new AlertsAdapter();
+        alertsAdapter = new AlertsAdapter(requireContext());
         alertsRecyclerView.setAdapter(alertsAdapter);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Errors");
+
 
         retrieveAlerts();
 
@@ -39,25 +49,36 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void retrieveAlerts() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<AlertsNotification> alertsList = new ArrayList<>();
 
-        List<AlertsNotification> alertsList = new ArrayList<>();
+                // Loop through the "Errors" children
+                for (DataSnapshot errorSnapshot : dataSnapshot.getChildren()) {
+                    // Shuffle the children to get a random message
+                    List<DataSnapshot> typeSnapshots = new ArrayList<>(errorSnapshot.getChildren());
+                    Collections.shuffle(typeSnapshots);
 
-        alertsList.add(new AlertsNotification("Sensor Error", "Sensor XYZ is malfunctioning."));
-        alertsList.add(new AlertsNotification("Movement Issue", "Unable to move forward."));
-        alertsList.add(new AlertsNotification("Connection Lost", "Connection to the main server lost."));
-        alertsList.add(new AlertsNotification("Low Battery", "Battery level is below 20%."));
+                    // Pick the first child as a random message
+                    DataSnapshot randomTypeSnapshot = typeSnapshots.get(0);
 
-        alertsAdapter.setAlertsList(alertsList);
+                    // Get type and message from the random child
+                    String type = randomTypeSnapshot.getKey();
+                    String message = randomTypeSnapshot.getValue(String.class);
 
+                    // Create an AlertsNotification object and add it to the list
+                    alertsList.add(new AlertsNotification(type, message));
+                }
+
+                // Update the RecyclerView with the retrieved alerts
+                alertsAdapter.setAlertsList(alertsList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors if needed
+            }
+        });
     }
-
-
-
-    public NotificationsFragment()
-    {
-
-    }
-
-
-
 }
