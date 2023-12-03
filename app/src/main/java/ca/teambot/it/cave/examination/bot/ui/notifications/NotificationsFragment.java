@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import ca.teambot.it.cave.examination.bot.AlertsAdapter;
@@ -48,18 +49,24 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void retrieveAlerts() {
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<AlertsNotification> alertsList = new ArrayList<>();
 
                 for (DataSnapshot errorSnapshot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot typeSnapshot : errorSnapshot.getChildren()) {
-                        String type = typeSnapshot.getKey();
-                        String message = typeSnapshot.getValue(String.class);
-
-                        alertsList.add(new AlertsNotification(type, message));
+                    List<DataSnapshot> typeSnapshots = new ArrayList<>();
+                    for (DataSnapshot snapshot : errorSnapshot.getChildren()) {
+                        typeSnapshots.add(snapshot);
                     }
+                    Collections.shuffle(typeSnapshots);
+
+                    DataSnapshot randomTypeSnapshot = typeSnapshots.get(0);
+
+                    String type = randomTypeSnapshot.getKey();
+                    String message = randomTypeSnapshot.getValue(String.class);
+
+                    alertsList.add(new AlertsNotification(type, message));
                 }
 
                 alertsAdapter.setAlertsList(alertsList);
@@ -67,6 +74,7 @@ public class NotificationsFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors if needed
             }
         });
     }
