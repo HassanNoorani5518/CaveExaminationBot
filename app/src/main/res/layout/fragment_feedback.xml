@@ -108,8 +108,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="116dp"
         android:layout_marginTop="528dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/white"
         android:text="@string/submit_feedback"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,12 +37,18 @@ public class NotificationsFragment extends Fragment {
     private DatabaseReference databaseReference;
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+
         View view = inflater.inflate(R.layout.fragment_notifications, container, false);
+
+        Button shuffleButton = view.findViewById(R.id.shuffleButton);
+
 
         alertsRecyclerView = view.findViewById(R.id.alertsRecyclerView);
         alertsAdapter = new AlertsAdapter(requireContext());
         alertsRecyclerView.setAdapter(alertsAdapter);
         databaseReference = FirebaseDatabase.getInstance().getReference("Errors");
+
+        shuffleButton.setOnClickListener(v -> shuffleErrors());
 
 
         retrieveAlerts();
@@ -81,5 +89,9 @@ public class NotificationsFragment extends Fragment {
 
     public NotificationsFragment() {
         // Default constructor
+    }
+
+    public void shuffleErrors(){
+        retrieveAlerts();
     }
 }

@@ -7,16 +7,14 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Button to shuffle errors -->
     <Button
         android:id="@+id/shuffleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shuffle Errors"
+        android:text="Refresh"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
 
-    <!-- RecyclerView for displaying alerts -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alertsRecyclerView"
         android:layout_width="match_parent"
