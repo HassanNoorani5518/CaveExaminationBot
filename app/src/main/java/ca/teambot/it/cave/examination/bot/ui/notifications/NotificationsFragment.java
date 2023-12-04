@@ -32,9 +32,9 @@ import com.google.firebase.database.ValueEventListener;
 public class NotificationsFragment extends Fragment {
 
     private RecyclerView alertsRecyclerView;
-    private AlertsAdapter alertsAdapter;
+    protected AlertsAdapter alertsAdapter;
 
-    private DatabaseReference databaseReference;
+    protected DatabaseReference databaseReference;
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
 
@@ -56,7 +56,7 @@ public class NotificationsFragment extends Fragment {
         return view;
     }
 
-    private void retrieveAlerts() {
+    protected void retrieveAlerts() {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
