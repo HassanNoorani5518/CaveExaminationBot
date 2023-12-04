@@ -127,35 +127,22 @@ public class LoginActivity extends AppCompatActivity
 
     public void login()
     {
-        boolean status = true;
+        LoginValidation loginValidation = new LoginValidation(this);
 
         String pemail = email.getText().toString();
         String ppassword = password.getText().toString();
         boolean prememberMe = rememberMe.isChecked();
 
-        if (pemail.isEmpty())
-        {
-            email.setError(getString(R.string.this_field_cannot_be_empty));
-            status = false;
-        }
-        else if (!pemail.matches(getString(R.string.a_za_z0_9_a_za_z0_9_a_za_z_2)))
+        if (!loginValidation.isValidEmail(pemail))
         {
             email.setError(getString(R.string.email_must_follow_correct_format));
-            status = false;
         }
-
-        if (ppassword.isEmpty())
-        {
-            password.setError(getString(R.string.this_field_cannot_be_empty));
-            status = false;
-        }
-        else if (!ppassword.matches(getString(R.string.a_z_a_z_d_a_za_z_d_6)))
+        if (!loginValidation.isValidPassword(ppassword))
         {
             password.setError(getString(R.string.password_must_follow_correct_format));
-            status = false;
         }
 
-        if (status)
+        if (loginValidation.isValidLogin(pemail, ppassword))
         {
             FBDatabase fbDatabase = new FBDatabase();
             fbDatabase.SignInUser(pemail, ppassword, LoginActivity.this, prememberMe);
