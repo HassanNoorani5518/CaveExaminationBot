@@ -14,7 +14,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import ca.teambot.it.cave.examination.bot.ui.FBDatabase;
-import ca.teambot.it.cave.examination.bot.ui.RegisterValidation;
+import ca.teambot.it.cave.examination.bot.RegisterValidation;
+
 
 public class RegisterActivity extends AppCompatActivity
 {
