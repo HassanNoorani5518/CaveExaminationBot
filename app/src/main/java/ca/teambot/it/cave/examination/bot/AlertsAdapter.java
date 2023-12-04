@@ -1,5 +1,6 @@
 package ca.teambot.it.cave.examination.bot;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,15 @@ import java.util.List;
 public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertViewHolder> {
 
     private List<AlertsNotification> alertsList;
+    private Context context;
 
     public void setAlertsList(List<AlertsNotification> alertsList) {
         this.alertsList = alertsList;
         notifyDataSetChanged();
+    }
+
+    public AlertsAdapter(Context context) {
+        this.context = context;
     }
 
     @NonNull
