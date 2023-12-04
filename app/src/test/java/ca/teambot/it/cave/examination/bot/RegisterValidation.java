@@ -1,4 +1,4 @@
-package ca.teambot.it.cave.examination.bot.ui;
+package ca.teambot.it.cave.examination.bot;
 
 import android.content.Context;
 
