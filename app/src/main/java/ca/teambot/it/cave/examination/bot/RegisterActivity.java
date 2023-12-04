@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import ca.teambot.it.cave.examination.bot.ui.FBDatabase;
+import ca.teambot.it.cave.examination.bot.ui.RegisterValidation;
 
 public class RegisterActivity extends AppCompatActivity
 {
@@ -26,6 +27,8 @@ public class RegisterActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        RegisterValidation registerValidation = new RegisterValidation(this);
 
         password = findViewById(R.id.editTextTextPassword);
         confirmPassword = findViewById(R.id.editTextTextConfirmPassword);
@@ -50,58 +53,29 @@ public class RegisterActivity extends AppCompatActivity
             String pphone = phone.getText().toString();
             String pconfirmPass = confirmPassword.getText().toString();
 
-            boolean status = true;
 
-            if (pemail.isEmpty())
-            {
-                email.setError(getString(R.string.this_field_cannot_be_empty));
-                status = false;
-            }
-            else if (!pemail.matches(getString(R.string.a_za_z0_9_a_za_z0_9_a_za_z_2)))
+            if (!registerValidation.isValidEmail(pemail))
             {
                 email.setError(getString(R.string.email_must_follow_correct_format));
-                status = false;
             }
-
-            if (pphone.isEmpty())
-            {
-                phone.setError(getString(R.string.this_field_cannot_be_empty));
-                status = false;
-            }
-            else if ((pphone.length() < 10) || !pphone.matches(getString(R.string._0_9_10)))
+            if (!registerValidation.isValidPhone(pphone))
             {
                 phone.setError(getString(R.string.this_field_must_have_exactly_10_numbers_and_no_alphabetic_characters));
-                status = false;
             }
-
-            if (ppassword.isEmpty())
-            {
-                password.setError(getString(R.string.this_field_cannot_be_empty));
-                status = false;
-            }
-            if (!ppassword.matches(getString(R.string.a_z_a_z_d_a_za_z_d_6)))
+            if (!registerValidation.isValidPassword(ppassword))
             {
                 password.setError(getString(R.string.password_must_follow_correct_format));
-                status = false;
             }
-            if (pconfirmPass.isEmpty())
-            {
-                confirmPassword.setError(getString(R.string.this_field_cannot_be_empty));
-                status = false;
-            }
-            if (!pconfirmPass.equals(ppassword))
+            if (!registerValidation.isValidConfirmPassword(ppassword, pconfirmPass))
             {
                 confirmPassword.setError(getString(R.string.the_passwords_do_not_match));
-                status = false;
             }
-
-            if (pname.isEmpty())
+            if (!registerValidation.isValidName(pname))
             {
                 name.setError(getString(R.string.this_field_cannot_be_empty));
-                status = false;
             }
 
-            if (status)
+            if (registerValidation.isValidRegistration(pname, pemail, ppassword, pphone, pconfirmPass))
             {
                 FBDatabase fbDatabase = new FBDatabase();
 
@@ -114,4 +88,5 @@ public class RegisterActivity extends AppCompatActivity
             }
         });
     }
+
 }
