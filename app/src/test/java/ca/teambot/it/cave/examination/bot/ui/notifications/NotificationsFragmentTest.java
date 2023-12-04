@@ -42,9 +42,7 @@ public class NotificationsFragmentTest {
 
     @Test
     public void testRetrieveAlerts() {
-        // Mock database response
         DataSnapshot mockDataSnapshot = mock(DataSnapshot.class);
-        // Add your predefined data to mockDataSnapshot
 
         doAnswer(invocation -> {
             ValueEventListener listener = invocation.getArgument(0);
@@ -62,16 +60,12 @@ public class NotificationsFragmentTest {
 
     @Test
     public void testShuffleErrors() {
-        // Mock retrieveAlerts method
         doAnswer(invocation -> {
-            // Your logic for retrieveAlerts goes here
             return null;
         }).when(mockDatabaseReference).addListenerForSingleValueEvent(any());
 
-        // Call the method
         notificationsFragment.shuffleErrors();
 
-        // Verify that retrieveAlerts is called
         verify(mockDatabaseReference).addListenerForSingleValueEvent(any());
     }
 
