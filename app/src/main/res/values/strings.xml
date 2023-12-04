@@ -97,5 +97,6 @@
     <string name="message" />
     <string name="Email" />
     <string name="done" />
+    <string name="Message" />
     />
 </resources>
