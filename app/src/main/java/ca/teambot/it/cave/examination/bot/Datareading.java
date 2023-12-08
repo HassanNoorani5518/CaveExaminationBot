@@ -1,5 +1,7 @@
 package ca.teambot.it.cave.examination.bot;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ public class Datareading extends Fragment {
     FirebaseDatabase database;
     Button button;
     TextView data;
+    private SensorDbHelper dbHelper;
 
     public Datareading() {
         // Required empty public constructor
@@ -37,6 +40,7 @@ public class Datareading extends Fragment {
         View view = inflater.inflate(R.layout.fragment_datareading, container, false);
 
         database = FirebaseDatabase.getInstance();
+        dbHelper = new SensorDbHelper(getContext());
 
         button = view.findViewById(R.id.button3);
         data = view.findViewById(R.id.textView11);
@@ -75,6 +79,8 @@ public class Datareading extends Fragment {
                     final String temperatureStr = snapshot.child("Temperature").getValue(String.class);
                     final String humidityStr = snapshot.child("Humidity").getValue(String.class);
 
+                    saveSensorDataToLocalDatabase(timeValue, airStr, caveStr, magStr, gasStr, temperatureStr, humidityStr);
+
                     assert airStr != null;
                     double airValue = Double.parseDouble(airStr);
                     assert caveStr != null;
@@ -104,5 +110,20 @@ public class Datareading extends Fragment {
 
             }
         });
+    }
+
+    private void saveSensorDataToLocalDatabase(String time, String airPressure, String caveIntegrity, String magneticField, String gasLevel, String temperature, String humidity) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SensorDataContract.SensorDataEntry.COLUMN_TIME, time);
+        values.put(SensorDataContract.SensorDataEntry.COLUMN_AIR_PRESSURE, airPressure);
+        values.put(SensorDataContract.SensorDataEntry.COLUMN_CAVE_INTEGRITY, caveIntegrity);
+        values.put(SensorDataContract.SensorDataEntry.COLUMN_MAGNETIC_FIELD, magneticField);
+        values.put(SensorDataContract.SensorDataEntry.COLUMN_GAS_LEVEL, gasLevel);
+        values.put(SensorDataContract.SensorDataEntry.COLUMN_TEMPERATURE, temperature);
+        values.put(SensorDataContract.SensorDataEntry.COLUMN_HUMIDITY, humidity);
+
+        long newRowId = db.insert(SensorDataContract.SensorDataEntry.TABLE_NAME, null, values);
     }
 }

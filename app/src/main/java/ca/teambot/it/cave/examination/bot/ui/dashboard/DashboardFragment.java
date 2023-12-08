@@ -18,11 +18,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import ca.teambot.it.cave.examination.bot.Datareading;
+import ca.teambot.it.cave.examination.bot.Localdata;
 import ca.teambot.it.cave.examination.bot.MainActivity;
 import ca.teambot.it.cave.examination.bot.R;
 import ca.teambot.it.cave.examination.bot.Robotcontrol;
 import ca.teambot.it.cave.examination.bot.SettingsFragment;
-import ca.teambot.it.cave.examination.bot.UpdatesAndContactFragment;
 
 public class DashboardFragment extends Fragment
 {
@@ -31,7 +31,7 @@ public class DashboardFragment extends Fragment
     Datareading datareading = new Datareading();
     Robotcontrol robotcontrol = new Robotcontrol();
 
-    UpdatesAndContactFragment updatesAndContactFragment = new UpdatesAndContactFragment();
+    Localdata localdata = new Localdata();
 
     public DashboardFragment()
     {
@@ -50,7 +50,7 @@ public class DashboardFragment extends Fragment
         settings.setOnClickListener(v -> navigateToSettingsFragment());
         robotControl.setOnClickListener(v -> navigateToRobotControlFragment());
         dataRead.setOnClickListener(v -> navigateToDataReadingFragment());
-        random.setOnClickListener(v -> navigateToUpdatesAndContactFragment());
+        random.setOnClickListener(v -> navigateToLocalData());
 
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -92,11 +92,11 @@ public class DashboardFragment extends Fragment
         fragmentTransaction.commit();
     }
 
-    private void navigateToUpdatesAndContactFragment()
+    private void navigateToLocalData()
     {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.activity_main, updatesAndContactFragment);
+        fragmentTransaction.replace(R.id.activity_main, localdata);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
