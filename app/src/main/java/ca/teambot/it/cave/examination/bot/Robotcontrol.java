@@ -38,6 +38,7 @@ public class Robotcontrol extends Fragment {
     private TextureView textureView;
     private static final int CAMERA_PERMISSION_REQUEST = 4;
     ImageButton upArrow, rightArrow, downArrow, leftArrow, flashlight;
+    getControls getControls = new getControls();
 
     public Robotcontrol() {
         // Required empty public constructor
@@ -65,16 +66,16 @@ public class Robotcontrol extends Fragment {
         }
 
         upArrow.setOnClickListener(view1 -> {
-            moveForward();
+            getControls.moveForward();
         });
         rightArrow.setOnClickListener(view12 -> {
-            moveRight();
+            getControls.moveRight();
         });
         downArrow.setOnClickListener(view13 -> {
-            moveDown();
+            getControls.moveBack();
         });
         leftArrow.setOnClickListener(view14 -> {
-            moveLeft();
+            getControls.moveLeft();
         });
         flashlight.setOnClickListener(view15 -> {
             toggleFlashlight();
@@ -198,18 +199,6 @@ public class Robotcontrol extends Fragment {
         }
     }
 
-    public void moveForward()
-    {
-    }
-    public void moveRight()
-    {
-    }
-    public void moveDown()
-    {
-    }
-    public void moveLeft()
-    {
-    }
     private void toggleFlashlight() {
         try {
             if (isFlashAvailable()) {
