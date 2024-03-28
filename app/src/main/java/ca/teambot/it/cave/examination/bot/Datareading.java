@@ -2,6 +2,8 @@ package ca.teambot.it.cave.examination.bot;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +29,8 @@ import ca.teambot.it.cave.examination.bot.ui.FBDatabase;
 public class Datareading extends Fragment {
     FirebaseDatabase database;
     Button button;
-    TextView data;
+    ImageButton temperatureButton, humidityButton;
+    TextView data, temperature, humidity;
     private SensorDbHelper dbHelper;
 
     public Datareading() {
@@ -44,6 +48,10 @@ public class Datareading extends Fragment {
 
         button = view.findViewById(R.id.button3);
         data = view.findViewById(R.id.textView11);
+        temperatureButton = view.findViewById(R.id.imageButton7);
+        temperature = view.findViewById(R.id.textView14);
+        humidity = view.findViewById(R.id.textView16);
+        humidityButton = view.findViewById(R.id.imageButton8);
 
         FBDatabase fbDatabase = new FBDatabase();
 
@@ -95,7 +103,37 @@ public class Datareading extends Fragment {
                     double humidityValue = Double.parseDouble(humidityStr);
 
                     handler.postDelayed(() -> {
-                        // Update your TextView with the retrieved values
+                        // Update your TextView with the retrieved value
+                        temperature.setText(String.format(getString(R.string._1f), temperatureValue) + getString(R.string.c));
+                        humidity.setText(String.format(getString(R.string._1f), humidityValue) + getString(R.string.percentage));
+
+                        if (temperatureValue > 20)
+                        {
+                            int color = Color.parseColor("#CE2029");
+                            temperatureButton.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+                        }
+                        else if (temperatureValue < 5)
+                        {
+                            int color = Color.parseColor("#0096C7");
+                            temperatureButton.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+                        }
+                        else
+                        {
+                            int color = Color.parseColor("#3E424B");
+                            temperatureButton.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+                        }
+
+                        if (humidityValue > 70)
+                        {
+                            int color = Color.parseColor("#CE2029");
+                            humidityButton.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+                        }
+                        else
+                        {
+                            int color = Color.parseColor("#3E424B");
+                            humidityButton.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+                        }
+
                         data.setText(String.format(getString(R.string.s_s_air_pressure_s_temperature_s_humidity_s_s_s_magnetic_field_s_cave_integrity_s),
                                 getString(R.string.time), timeValue, String.format(getString(R.string._3f), airValue), String.format(getString(R.string._3f), temperatureValue),
                                 String.format(getString(R.string._3f), humidityValue), getString(R.string.gas_level), String.format(getString(R.string._3f), gasValue),
