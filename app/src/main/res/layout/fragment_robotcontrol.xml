@@ -14,25 +14,68 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
+
     <ImageButton
-        android:id="@+id/imageButton6"
-        android:layout_width="55dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="340dp"
-        android:layout_marginTop="388dp"
+        android:id="@+id/imageButton_forwardRight"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="345dp"
+        android:layout_marginTop="445dp"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/todo"
         android:scaleType="fitCenter"
-        android:src="@drawable/flashlight"
-        android:background="@android:color/transparent"
+        android:src="@drawable/forward_right"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton5"
-        android:layout_width="57dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="336dp"
-        android:layout_marginTop="492dp"
+        android:id="@+id/imageButton_backRight"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="345dp"
+        android:layout_marginTop="545dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/todo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_right"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton_backLeft"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="245dp"
+        android:layout_marginTop="545dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/todo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <ImageButton
+        android:id="@+id/imageButton_forwardLeft"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="245dp"
+        android:layout_marginTop="445dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/todo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/forward_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageButton
+        android:id="@+id/buttonRight"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="345dp"
+        android:layout_marginTop="495dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/todo"
         android:scaleType="fitCenter"
@@ -42,11 +85,11 @@
         tools:src="@drawable/rightarrow" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
-        android:layout_width="55dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="288dp"
-        android:layout_marginTop="540dp"
+        android:id="@+id/buttonBack"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="295dp"
+        android:layout_marginTop="545dp"
         android:contentDescription="@string/todo"
         android:scaleType="fitCenter"
         android:src="@drawable/downarrow"
@@ -55,11 +98,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="55dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="240dp"
-        android:layout_marginTop="496dp"
+        android:id="@+id/buttonLeft"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="245dp"
+        android:layout_marginTop="495dp"
         android:contentDescription="@string/todo"
         android:scaleType="fitCenter"
         android:src="@drawable/leftarrow"
@@ -68,17 +111,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="55dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="288dp"
-        android:layout_marginTop="448dp"
+        android:id="@+id/buttonForward"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="295dp"
+        android:layout_marginTop="445dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/todo"
         android:scaleType="fitCenter"
         android:src="@drawable/uparrow"
         app:layout_constraintStart_toStartOf="@+id/textureView"
         app:layout_constraintTop_toTopOf="@+id/textureView" />
+
+    <ImageButton
+        android:id="@+id/imageButton6"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="340dp"
+        android:layout_marginTop="388dp"
+        android:contentDescription="@string/todo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/flashlight"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

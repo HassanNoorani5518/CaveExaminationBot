@@ -20,6 +20,7 @@ import android.Manifest;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -37,7 +38,7 @@ public class Robotcontrol extends Fragment {
     private CameraDevice cameraDevice;
     private TextureView textureView;
     private static final int CAMERA_PERMISSION_REQUEST = 4;
-    ImageButton upArrow, rightArrow, downArrow, leftArrow, flashlight;
+    ImageButton upArrow, rightArrow, downArrow, leftArrow, forwardRight, forwardLeft, backRight, backLeft, flashlight;
     getControls getControls = new getControls();
 
     public Robotcontrol() {
@@ -51,11 +52,18 @@ public class Robotcontrol extends Fragment {
         textureView = view.findViewById(R.id.textureView);
         textureView.setSurfaceTextureListener(textureListener);
 
-        upArrow = view.findViewById(R.id.imageButton2);
-        rightArrow = view.findViewById(R.id.imageButton5);
-        downArrow = view.findViewById(R.id.imageButton4);
-        leftArrow = view.findViewById(R.id.imageButton3);
+        upArrow = view.findViewById(R.id.buttonForward);
+        rightArrow = view.findViewById(R.id.buttonRight);
+        downArrow = view.findViewById(R.id.buttonBack);
+        leftArrow = view.findViewById(R.id.buttonLeft);
+
+        forwardRight = view.findViewById(R.id.imageButton_forwardRight);
+        forwardLeft = view.findViewById(R.id.imageButton_forwardLeft);
+        backRight = view.findViewById(R.id.imageButton_backRight);
+        backLeft = view.findViewById(R.id.imageButton_backLeft);
+
         flashlight = view.findViewById(R.id.imageButton6);
+
 
         cameraManager = (CameraManager) requireActivity().getSystemService(Context.CAMERA_SERVICE);
 
@@ -65,18 +73,125 @@ public class Robotcontrol extends Fragment {
             e.printStackTrace();
         }
 
-        upArrow.setOnClickListener(view1 -> {
-            getControls.moveForward();
+        upArrow.setOnTouchListener((View.OnTouchListener) (v, event) -> {
+            switch (event.getAction())
+            {
+                case MotionEvent.ACTION_DOWN:
+                    getControls.moveForward();
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    getControls.stop();
+                    v.performClick();
+                    return true;
+            }
+            return false;
         });
-        rightArrow.setOnClickListener(view12 -> {
-            getControls.moveRight();
+
+        forwardRight.setOnTouchListener((View.OnTouchListener) (v, event) -> {
+            switch (event.getAction())
+            {
+                case MotionEvent.ACTION_DOWN:
+                    getControls.moveForwardRight();
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    getControls.stop();
+                    v.performClick();
+                    return true;
+            }
+            return false;
         });
-        downArrow.setOnClickListener(view13 -> {
-            getControls.moveBack();
+
+        rightArrow.setOnTouchListener((View.OnTouchListener) (v, event) -> {
+            switch (event.getAction())
+            {
+                case MotionEvent.ACTION_DOWN:
+                    getControls.moveRight();
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    getControls.stop();
+                    v.performClick();
+                    return true;
+            }
+            return false;
         });
-        leftArrow.setOnClickListener(view14 -> {
-            getControls.moveLeft();
+
+
+
+        backRight.setOnTouchListener((View.OnTouchListener) (v, event) -> {
+            switch (event.getAction())
+            {
+                case MotionEvent.ACTION_DOWN:
+                    getControls.moveBackRight();
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    getControls.stop();
+                    v.performClick();
+                    return true;
+            }
+            return false;
         });
+
+
+
+        downArrow.setOnTouchListener((View.OnTouchListener) (v, event) -> {
+            switch (event.getAction())
+            {
+                case MotionEvent.ACTION_DOWN:
+                    getControls.moveBack();
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    getControls.stop();
+                    v.performClick();
+                    return true;
+            }
+            return false;
+        });
+
+
+        backLeft.setOnTouchListener((View.OnTouchListener) (v, event) -> {
+            switch (event.getAction())
+            {
+                case MotionEvent.ACTION_DOWN:
+                    getControls.moveBackLeft();
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    getControls.stop();
+                    v.performClick();
+                    return true;
+            }
+            return false;
+        });
+
+        leftArrow.setOnTouchListener((View.OnTouchListener) (v, event) -> {
+            switch (event.getAction())
+            {
+                case MotionEvent.ACTION_DOWN:
+                    getControls.moveLeft();
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    getControls.stop();
+                    v.performClick();
+                    return true;
+            }
+            return false;
+        });
+
+
+        forwardLeft.setOnTouchListener((View.OnTouchListener) (v, event) -> {
+            switch (event.getAction())
+            {
+                case MotionEvent.ACTION_DOWN:
+                    getControls.moveForwardLeft();
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    getControls.stop();
+                    v.performClick();
+                    return true;
+            }
+            return false;
+        });
+
+
         flashlight.setOnClickListener(view15 -> {
             toggleFlashlight();
         });
