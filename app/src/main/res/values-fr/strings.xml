@@ -102,5 +102,10 @@
     <string name="robot_control">Robot Control</string>
     <string name="data_reading">Data Reading</string>
     <string name="local_data_review">Local Data review</string>
+    <string name="temperature">Temperature</string>
+    <string name="_1f">%.1f</string>
+    <string name="c">°C</string>
+    <string name="humidity">Humidity</string>
+    <string name="percentage">%</string>
     />
 </resources>
