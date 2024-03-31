@@ -49,10 +49,7 @@ public class Localdata extends Fragment {
 
         String[] projection = {
                 SensorDataContract.SensorDataEntry.COLUMN_TIME,
-                SensorDataContract.SensorDataEntry.COLUMN_AIR_PRESSURE,
                 SensorDataContract.SensorDataEntry.COLUMN_CAVE_INTEGRITY,
-                SensorDataContract.SensorDataEntry.COLUMN_MAGNETIC_FIELD,
-                SensorDataContract.SensorDataEntry.COLUMN_GAS_LEVEL,
                 SensorDataContract.SensorDataEntry.COLUMN_TEMPERATURE,
                 SensorDataContract.SensorDataEntry.COLUMN_HUMIDITY,
         };
@@ -70,15 +67,12 @@ public class Localdata extends Fragment {
         cursor.moveToPosition(index);
 
         String time = cursor.getString(cursor.getColumnIndexOrThrow(SensorDataContract.SensorDataEntry.COLUMN_TIME));
-        String airPressure = cursor.getString(cursor.getColumnIndexOrThrow(SensorDataContract.SensorDataEntry.COLUMN_AIR_PRESSURE));
         String caveIntegrity = cursor.getString(cursor.getColumnIndexOrThrow(SensorDataContract.SensorDataEntry.COLUMN_CAVE_INTEGRITY));
-        String magneticField = cursor.getString(cursor.getColumnIndexOrThrow(SensorDataContract.SensorDataEntry.COLUMN_MAGNETIC_FIELD));
-        String gasLevel = cursor.getString(cursor.getColumnIndexOrThrow(SensorDataContract.SensorDataEntry.COLUMN_GAS_LEVEL));
         String temperature = cursor.getString(cursor.getColumnIndexOrThrow(SensorDataContract.SensorDataEntry.COLUMN_TEMPERATURE));
         String humidity = cursor.getString(cursor.getColumnIndexOrThrow(SensorDataContract.SensorDataEntry.COLUMN_HUMIDITY));
 
         // Update the TextView with the retrieved values
-        localDataTextView.setText(String.format("Time: %s\nAir Pressure: %s\nCave Integrity:%s\nMagnetic Field:%s\nGass Level:%s\nTemperature:%s\nHumidity:%s\n", time, airPressure, caveIntegrity, magneticField, gasLevel, temperature, humidity));
+        localDataTextView.setText(String.format("Time: %s\nCave Integrity:%s\nTemperature:%s\nHumidity:%s\n", time, caveIntegrity, temperature, humidity));
 
         cursor.close();
     }

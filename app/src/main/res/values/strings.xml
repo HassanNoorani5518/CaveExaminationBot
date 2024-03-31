@@ -109,5 +109,7 @@
     <string name="c">°C</string>
     <string name="humidity">Humidity</string>
     <string name="percentage">%</string>
+    <string name="_1">%.1</string>
+    <string name="cave_integrity">Cave integrity</string>
     />
 </resources>
