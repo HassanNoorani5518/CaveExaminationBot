@@ -30,9 +30,9 @@ public class Datareading extends Fragment {
     FirebaseDatabase database;
     Button button;
     ImageButton temperatureButton, humidityButton, caveButton;
-    TextView data, temperature, humidity, objectDetection, caveIntegrity;
+    TextView temperature, humidity, objectDetection, caveIntegrity;
     private SensorDbHelper dbHelper;
-    int caveInt;
+    int caveInt = 4;
 
     public Datareading() {
         // Required empty public constructor
@@ -48,7 +48,6 @@ public class Datareading extends Fragment {
         dbHelper = new SensorDbHelper(getContext());
 
         button = view.findViewById(R.id.button3);
-        data = view.findViewById(R.id.textView11);
         temperatureButton = view.findViewById(R.id.imageButton7);
         temperature = view.findViewById(R.id.textView14);
         humidity = view.findViewById(R.id.textView16);
@@ -74,35 +73,38 @@ public class Datareading extends Fragment {
     {
         DatabaseReference dataReference = FirebaseDatabase.getInstance().getReference().child("SensorData");
         Handler handler = new Handler();
+        double humidityValue = 0;
+        double temperatureValue = 0;
 
         dataReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
                 long delay = 0;
-                int count = 0;
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    final String key = snapshot.getKey();
                     final String timeValue = snapshot.child("Time").getValue(String.class);
-                    final String objectDetected = snapshot.child("Object Detected").getValue(String.class);
+                    final String objectDetected = snapshot.child("Spectrometer").getValue(String.class);
                     final String temperatureStr = snapshot.child("Temperature").getValue(String.class);
                     final String humidityStr = snapshot.child("Humidity").getValue(String.class);
 
                     saveSensorDataToLocalDatabase(timeValue, objectDetected, temperatureStr, humidityStr);
 
-                    assert objectDetected != null;
-                    double objectValue = Double.parseDouble(objectDetected);
+                    //assert objectDetected != null;
+                    //double objectValue = Double.parseDouble(objectDetected);
                     assert temperatureStr != null;
-                    double temperatureValue = Double.parseDouble(temperatureStr);
                     assert humidityStr != null;
                     double humidityValue = Double.parseDouble(humidityStr);
+                    double temperatureValue = Double.parseDouble(temperatureStr);
+
 
                     handler.postDelayed(() -> {
                         // Update your TextView with the retrieved value
-                        temperature.setText(String.format(getString(R.string._1f), temperatureValue) + getString(R.string.c));
                         humidity.setText(String.format(getString(R.string._1f), humidityValue) + getString(R.string.percentage));
-                        objectDetection.setText(String.format(getString(R.string._1), objectValue));
-                        caveIntegrity.setText(caveInt);
+                        temperature.setText(String.format(getString(R.string._1f), temperatureValue) + getString(R.string.c));
+                        //objectDetection.setText(String.format(getString(R.string._1), objectValue));
+                        caveIntegrity.setText(String.valueOf(caveInt));
 
 
                         if (temperatureValue > 20)
@@ -132,15 +134,15 @@ public class Datareading extends Fragment {
                             int color = Color.parseColor("#3E424B");
                             humidityButton.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
                         }
-                        if ((temperatureValue > 5 && temperatureValue < 20) && (humidityValue < 70))
+                        if ((temperatureValue > 5 && temperatureValue < 20) && (humidityValue < 1))
                         {
                             caveInt = 4;
                         }
-                        else if (temperatureValue > 20 && (humidityValue < 70))
+                        else if (temperatureValue > 20 && (humidityValue < 1))
                         {
                             caveInt = 3;
                         }
-                        else if (temperatureValue < 5 && (humidityValue < 70))
+                        else if (temperatureValue < 5 && (humidityValue < 1))
                         {
                             caveInt = 2;
                         }
@@ -156,7 +158,6 @@ public class Datareading extends Fragment {
                         switch (caveInt)
                         {
                             case 0:
-
                                 caveButton.getBackground().setColorFilter(colorRed, PorterDuff.Mode.SRC_ATOP);
                                 break;
                             case 1:
@@ -166,7 +167,7 @@ public class Datareading extends Fragment {
                                 caveButton.getBackground().setColorFilter(colorOrange, PorterDuff.Mode.SRC_ATOP);
                                 break;
                             case 3:
-                                caveButton.getBackground().setColorFilter(colorLgreen, PorterDuff.Mode.SRC_ATOP);
+                                caveButton.getBackground().setColorFilter(colorGreen, PorterDuff.Mode.SRC_ATOP);
                                 break;
                             case 4:
                                 caveButton.getBackground().setColorFilter(colorGreen, PorterDuff.Mode.SRC_ATOP);
