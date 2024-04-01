@@ -174,7 +174,7 @@ public class Datareading extends Fragment {
                                 break;
                         }
                     }, delay);
-                    delay += 3000; // 3000 milliseconds, or 3 seconds
+                    delay += 500; // 3000 milliseconds, or 3 seconds
                 }
             }
 
